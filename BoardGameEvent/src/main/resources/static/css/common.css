@@ -1,0 +1,266 @@
+body {
+  padding: 20px 120px;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.ref {
+  color: #000;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.home-header {
+  display: flex;
+  height: 120px;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  margin-bottom: 64px;
+}
+
+.home-list {
+  text-decoration: none;
+  color: #000;
+  text-align: center;
+  font-family: Rubik;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 55px; /* 196.429% */
+  letter-spacing: 0.1px;
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  gap: 60px;
+}
+
+.container-search {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  margin-bottom: 100px;
+  gap: 20px;
+}
+
+.search-input {
+  display: flex;
+  border: 1px solid #b9b3b3;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+}
+
+.search-in {
+  border: none;
+  outline: none;
+  width: 260px;
+}
+
+.search-btn {
+  border: none;
+  background-color: inherit;
+}
+
+.search-btn:focus {
+  border: none;
+  outline: none;
+  background-color: inherit;
+}
+
+.sd {
+  border: none;
+  outline: none;
+  color: #b9b3b3;
+}
+
+.sd-container {
+  display: flex;
+  gap: 10px;
+}
+
+.select-wrap {
+  border-radius: 12px;
+}
+
+.select-wrap label {
+  font-size: 10px;
+  text-transform: uppercase;
+  padding: 2px 8px 0;
+}
+
+select {
+  background-color: inherit;
+  border: 0px;
+  outline: none;
+}
+
+.container-cards {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.cards-section {
+  margin-bottom: 80px;
+}
+
+.cards-header {
+  color: #000;
+  font-family: Rubik;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px; /* 116.667% */
+  letter-spacing: 0.1px;
+  margin-bottom: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+}
+
+.card:not(:last-child) {
+  margin-right: 16px;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.name {
+  font-family: Rubik;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 100% */
+  margin-bottom: 14px;
+}
+
+.description {
+  padding-left: 30px;
+  margin-bottom: 14px;
+  text-align: justify;
+}
+
+.location {
+  margin-bottom: 14px;
+}
+
+.time {
+  margin-bottom: 14px;
+}
+
+.part-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.show-more {
+  color: #0046ff;
+  text-align: left;
+  font-family: Rubik;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px; /* 155.556% */
+  letter-spacing: 0.1px;
+  transition-duration: 300ms;
+}
+
+.show-more:hover {
+  color: #0030b5;
+  text-decoration: underline;
+}
+
+.divider {
+  height: 16px;
+  opacity: 0.1;
+  background: #42ba58;
+  width: 100%;
+  margin: 60px 0px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-btns {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.footer-btn {
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px; /* 100% */
+}
+
+.footer-head {
+  text-align: center;
+  font-family: Rubik;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 56px; /* 186.667% */
+}
+
+.footer-descr {
+  text-align: center;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+  letter-spacing: 0.25px;
+  width: 70%;
+  margin-bottom: 30px;
+}
+
+.play {
+  color: #f4ce14;
+}
+
+.chat {
+  color: #00ff2a;
+}
+
+.fun {
+  color: #0046ff;
+}
+
+.card-game {
+  flex-direction: row;
+  border-radius: 15px;
+  width: 50%;
+}
