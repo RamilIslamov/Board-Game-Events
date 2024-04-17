@@ -24,7 +24,7 @@ public class EventServiceImpl extends AbstractSrdServiceImpl<Integer, Event> imp
         Event entity = getById(event.getId());
         entity.setPlayers(event.getPlayers());
         entity.setName(event.getName());
-        entity.setEvent_date(event.getEvent_date());
+        entity.setEventDate(event.getEventDate());
         entity.setLocation(event.getLocation());
         entity.setDescription(event.getDescription());
 

@@ -16,7 +16,7 @@ public class EventConverterImpl implements EventConverter {
         entity.setName(api.getName());
         entity.setDescription(api.getDescription());
         entity.setLocation(api.getLocation());
-        entity.setEvent_date(api.getDateTime());
+        entity.setEventDate(api.getDateTime());
         entity.setPlayers(api.getPlayers());
         return entity;
     }
@@ -28,7 +28,7 @@ public class EventConverterImpl implements EventConverter {
         api.setDescription(entity.getDescription());
         api.setLocation(entity.getLocation());
         api.setPlayers(entity.getPlayers());
-        api.setDateTime(entity.getEvent_date());
+        api.setDateTime(entity.getEventDate());
         return api;
     }
 
