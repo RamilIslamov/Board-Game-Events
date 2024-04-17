@@ -1,5 +1,5 @@
 body {
-  background-image: url(/img/bckgr.jpeg);
+  background-image: url(static/img/bckgr.jpeg);
   background-size: cover;
   align-items: center;
   padding-top: 45px;
