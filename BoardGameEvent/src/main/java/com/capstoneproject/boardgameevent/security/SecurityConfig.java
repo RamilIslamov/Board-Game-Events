@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .requestMatchers("/", "/**").permitAll()
                 .and()
                 .formLogin()
-                .loginPage("index")
+                .loginPage("/index")
                 .and()
                 .build();
     }

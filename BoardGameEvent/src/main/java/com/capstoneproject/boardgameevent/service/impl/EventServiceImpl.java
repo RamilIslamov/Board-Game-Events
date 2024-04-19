@@ -7,7 +7,7 @@ import com.capstoneproject.boardgameevent.service.EventService;
 
 public class EventServiceImpl extends AbstractSrdServiceImpl<Integer, Event> implements EventService {
 
-    public EventServiceImpl(final EventRepository eventRepository) {
+    public EventServiceImpl(EventRepository eventRepository) {
         super(eventRepository);
     }
 

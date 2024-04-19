@@ -16,4 +16,5 @@ public class Event {
     private String location;
     private LocalDateTime dateTime;
     private int players;
+    private int rating;
 }

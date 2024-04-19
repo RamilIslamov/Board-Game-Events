@@ -17,7 +17,7 @@
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             crossorigin="anonymous"
     />
-    <link rel="stylesheet" th:href="@{/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/css/index.css/}">
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
@@ -36,13 +36,13 @@
 <body>
 
 <div class="container login-box">
-    <img th:src="@{/img/Logo.png}"/>
+    <img src="/img/Logo.png"/>
     <h1 class="login-box-header">
         Welcome to Board Game App! <br/>
         Create an account
     </h1>
     <p class="login-box-small-text">Already have an account?</p>
-    <a class="login-box-small-text-login" href="/login.html">Log in</a>
+    <a class="login-box-small-text-login" href="login">Log in</a>
     <div class="form-container">
         <form method="POST" th:action="@{/register}" id="registerForm">
             <div class="form-group">

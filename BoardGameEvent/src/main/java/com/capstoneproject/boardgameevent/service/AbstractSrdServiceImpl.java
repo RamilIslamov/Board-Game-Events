@@ -14,7 +14,7 @@ public abstract class AbstractSrdServiceImpl<K extends Serializable, E> implemen
 
     private final CrudRepository<E, K> repository;
 
-    protected AbstractSrdServiceImpl(final CrudRepository<E, K> repository) {
+    protected AbstractSrdServiceImpl(CrudRepository<E, K> repository) {
         this.repository = repository;
     }
 

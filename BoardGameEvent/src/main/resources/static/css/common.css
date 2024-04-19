@@ -179,11 +179,17 @@ select {
   line-height: 28px; /* 155.556% */
   letter-spacing: 0.1px;
   transition-duration: 300ms;
+  outline: none;
+  border: none;
+  background-color: inherit;
 }
 
 .show-more:hover {
   color: #0030b5;
   text-decoration: underline;
+  outline: none;
+  border: none;
+  background-color: inherit;
 }
 
 .divider {

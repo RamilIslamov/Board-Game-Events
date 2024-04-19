@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "event_name")
@@ -31,6 +31,12 @@ public class Event {
     @Column(name = "event_date")
     private LocalDateTime eventDate;
 
-    @Column(name = "olayers")
+    @Column(name = "players")
     private Integer players;
+
+    @Column(name = "rating")
+    private Float rating;
+
+    @Column(name = "game_id")
+    private Integer gameId;
 }

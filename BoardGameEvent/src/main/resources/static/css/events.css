@@ -63,3 +63,11 @@
   outline: none;
   border: none;
 }
+
+.my-events-container.card:nth-child(n+4) {
+  display: none;
+}
+
+.my-events-container.card.is-visible {
+  display: block;
+}

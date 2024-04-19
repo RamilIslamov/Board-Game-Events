@@ -20,12 +20,4 @@ public class BeanConfiguration {
         return new EventConverterImpl();
     }
 
-    @Bean
-    public EventController initEventController(final EventService eventService,
-                                               final EventConverter eventConverter,
-                                               final EventRepository eventRepository) {
-        return new EventController(eventService,
-                                   eventConverter,
-                                   eventRepository);
-    }
 }

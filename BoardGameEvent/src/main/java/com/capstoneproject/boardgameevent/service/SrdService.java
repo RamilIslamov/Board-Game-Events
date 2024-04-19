@@ -17,7 +17,6 @@ public interface SrdService<K, E> {
 
     boolean existsById(K id);
 
-
     E delete(K id);
 
 }
