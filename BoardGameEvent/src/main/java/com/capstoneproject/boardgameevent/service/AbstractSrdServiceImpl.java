@@ -12,15 +12,7 @@ import static org.apache.commons.collections4.IterableUtils.toList;
 
 public abstract class AbstractSrdServiceImpl<K extends Serializable, E> implements SrdService<K, E> {
 
-    private final CrudRepository<E, K> repository;
-
-    protected AbstractSrdServiceImpl(CrudRepository<E, K> repository) {
-        this.repository = repository;
-    }
-
-    protected CrudRepository<E, K> getRepository() {
-        return repository;
-    }
+    protected abstract CrudRepository<E, K> getRepository();
 
     public String getEntityName() {
         return getEntityClass().getSimpleName();

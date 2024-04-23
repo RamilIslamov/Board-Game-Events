@@ -26,7 +26,7 @@ import static java.text.MessageFormat.format;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.http.ResponseEntity.ok;
 
-@RestController
+@Controller
 @RequestMapping(path = "/events")
 @CrossOrigin(origins = "*")
 public class EventController {
@@ -61,7 +61,7 @@ public class EventController {
         List<Event> events = eventConverter.convert(eventService.findAll());
         events.sort(Comparator.comparingDouble(Event::getRating));
         model.addAttribute("events", events);
-        return "events";
+        return "/events";
     }
 
     @PostMapping

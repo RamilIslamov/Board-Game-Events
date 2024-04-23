@@ -29,6 +29,8 @@
 }
 
 .card-content {
+  display: flex;
+  flex-direction: column;
   padding: 10px 20px;
   padding-top: 35px;
   background: #42ba58;
@@ -36,11 +38,13 @@
   font-family: Roboto;
   font-size: 14px;
   font-style: normal;
+  height: 100%;
   font-weight: 400;
   line-height: 20px; /* 125% */
   letter-spacing: 0.25px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+  justify-content: space-between;
 }
 
 .icon-plus {
@@ -64,10 +68,10 @@
   border: none;
 }
 
-.my-events-container.card:nth-child(n+4) {
+.card:nth-child(n+4) {
   display: none;
 }
 
-.my-events-container.card.is-visible {
-  display: block;
+.card.is-visible {
+  display: flex;
 }

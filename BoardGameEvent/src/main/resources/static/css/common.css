@@ -2,6 +2,15 @@ body {
   padding: 20px 120px;
 }
 
+h2 {
+  display: inline-block;
+  font-size: 20px;
+}
+
+p {
+  display: inline-block;
+}
+
 a:hover {
   cursor: pointer;
 }
@@ -110,6 +119,7 @@ select {
 .container-cards {
   display: flex;
   margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
 .cards-section {
@@ -131,6 +141,8 @@ select {
   display: flex;
   flex-direction: column;
   border-radius: 15px;
+  width: 32%;
+  margin-bottom: 15px;
 }
 
 .card:not(:last-child) {
@@ -187,6 +199,12 @@ select {
 .show-more:hover {
   color: #0030b5;
   text-decoration: underline;
+  outline: none;
+  border: none;
+  background-color: inherit;
+}
+
+.show-more:focus {
   outline: none;
   border: none;
   background-color: inherit;

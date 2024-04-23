@@ -4,11 +4,19 @@ import com.capstoneproject.boardgameevent.entity.Event;
 import com.capstoneproject.boardgameevent.repository.EventRepository;
 import com.capstoneproject.boardgameevent.service.AbstractSrdServiceImpl;
 import com.capstoneproject.boardgameevent.service.EventService;
+import org.springframework.data.repository.CrudRepository;
 
 public class EventServiceImpl extends AbstractSrdServiceImpl<Integer, Event> implements EventService {
 
+    private final EventRepository eventRepository;
+
     public EventServiceImpl(EventRepository eventRepository) {
-        super(eventRepository);
+        this.eventRepository = eventRepository;
+    }
+
+    @Override
+    protected CrudRepository<Event, Integer> getRepository() {
+        return eventRepository;
     }
 
     @Override
