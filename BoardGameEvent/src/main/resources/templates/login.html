@@ -36,26 +36,33 @@
       <img src="/img/Logo.png" alt="Logo" />
       <h1 class="login-box-header">Log in</h1>
       <p class="login-box-small-text">Don’t have an account?</p>
-      <a class="login-box-small-text-login" href="/"
+      <a class="login-box-small-text-login" href="/register"
         >Create an account.</a
       >
+      <div th:if="${param.error}">
+        Invalid username and password.
+      </div>
+      <div th:if="${param.logout}">
+        You have been logged out.
+      </div>
       <div class="form-container">
-        <form>
+        <form th:action="@{/login}" method="post">
           <div class="form-group">
-            <label class="labele" for="exampleInputEmail1">Email address</label>
+            <label class="labele" for="exampleInputName">User name</label>
             <input
-              type="email"
+              type="text"
               class="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
+              id="exampleInputName"
+              name="username"
             />
           </div>
           <div class="form-group">
-            <label class="labele" for="exampleInputPassword1">Password</label>
+            <label class="labele" for="exampleInputPassword">Password</label>
             <input
               type="password"
               class="form-control"
-              id="exampleInputPassword1"
+              id="exampleInputPassword"
+              name="password"
             />
           </div>
           <button type="submit" class="btn btn-primary create-btn">

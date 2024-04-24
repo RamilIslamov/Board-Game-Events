@@ -1,18 +1,19 @@
 package com.capstoneproject.boardgameevent.service.impl;
 
 import com.capstoneproject.boardgameevent.entity.Event;
+import com.capstoneproject.boardgameevent.exception.DataAccessException;
 import com.capstoneproject.boardgameevent.repository.EventRepository;
 import com.capstoneproject.boardgameevent.service.AbstractSrdServiceImpl;
 import com.capstoneproject.boardgameevent.service.EventService;
+import lombok.AllArgsConstructor;
 import org.springframework.data.repository.CrudRepository;
 
+import static java.text.MessageFormat.format;
+
+@AllArgsConstructor
 public class EventServiceImpl extends AbstractSrdServiceImpl<Integer, Event> implements EventService {
 
     private final EventRepository eventRepository;
-
-    public EventServiceImpl(EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
-    }
 
     @Override
     protected CrudRepository<Event, Integer> getRepository() {
@@ -37,5 +38,14 @@ public class EventServiceImpl extends AbstractSrdServiceImpl<Integer, Event> imp
         entity.setDescription(event.getDescription());
 
         return entity;
+    }
+
+    @Override
+    public Event save(Event entity) {
+        if (existsById(entity.getId())) {
+            throw new DataAccessException(format("Event with ID {0} already exist.",
+                                                 entity.getId()));
+        }
+        return eventRepository.save(entity);
     }
 }

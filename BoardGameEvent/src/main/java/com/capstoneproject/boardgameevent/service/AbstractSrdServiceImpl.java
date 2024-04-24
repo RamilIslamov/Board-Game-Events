@@ -20,11 +20,6 @@ public abstract class AbstractSrdServiceImpl<K extends Serializable, E> implemen
 
     protected abstract Class<E> getEntityClass();
 
-    @Transactional
-    public E save(E entity) {
-        return getRepository().save(entity);
-    }
-
     public List<E> findAll() {
         return toList(getRepository().findAll());
     }

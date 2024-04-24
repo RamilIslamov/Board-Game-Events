@@ -40,3 +40,11 @@ create table if not exists places
     event_id integer not null references events(id),
     description varchar(255) not null
 );
+
+create table if not exists users
+(
+    id serial primary key,
+    email varchar(255) not null,
+    password varchar(255),
+    username varchar(255)
+);

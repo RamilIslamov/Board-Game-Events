@@ -46,31 +46,42 @@
     <div class="form-container">
         <form method="POST" th:action="@{/register}" id="registerForm">
             <div class="form-group">
-                <label class="labele" for="userEmail">Email address</label>
+                <label class="labele" for="email">Email address</label>
                 <input
                         type="email"
                         class="form-control"
-                        id="userEmail"
-                        aria-describedby="emailHelp"
+                        name="email"
+                        id="email"
                 />
             </div>
             <div class="form-group">
-                <label class="labele" for="userName">Name</label>
+                <label class="labele" for="username">Name</label>
                 <input
                         type="text"
                         class="form-control"
-                        id="userName"
+                        id="username"
+                        name="username"
                 />
             </div>
             <div class="form-group">
-                <label class="labele" for="userPassword">Password</label>
+                <label class="labele" for="userPassword1">Password</label>
                 <input
                         type="password"
                         class="form-control"
-                        id="userPassword"
+                        id="userPassword1"
+                        name="password"
                 />
             </div>
-            <button type="submit" class="btn btn-primary create-btn">
+            <div class="form-group">
+                <label class="labele" for="userPassword2">Repeat password</label>
+                <input
+                        type="password"
+                        class="form-control"
+                        id="userPassword2"
+                />
+                <div id="error-msg" class="err-msg"></div>
+            </div>
+            <button id="create-btn" type="submit" class="btn btn-primary create-btn">
                 Create
             </button>
             <p class="sign-with-google">
@@ -97,5 +108,6 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"
 ></script>
+<script src="/js/password-verify.js"></script>
 </body>
 </html>

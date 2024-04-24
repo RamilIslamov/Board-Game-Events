@@ -1,6 +1,5 @@
 package com.capstoneproject.boardgameevent.rest.controller;
 
-import com.capstoneproject.boardgameevent.exception.DataAccessException;
 import com.capstoneproject.boardgameevent.repository.EventRepository;
 import com.capstoneproject.boardgameevent.rest.converter.EventConverter;
 import com.capstoneproject.boardgameevent.rest.model.Event;
@@ -8,7 +7,6 @@ import com.capstoneproject.boardgameevent.service.EventService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Comparator;
 import java.util.List;
 
-import static java.text.MessageFormat.format;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -67,11 +63,6 @@ public class EventController {
     @PostMapping
     public ResponseEntity<Event> create(@RequestBody Event api) {
         com.capstoneproject.boardgameevent.entity.Event entity = eventConverter.convert(api);
-
-        if (eventService.existsById(entity.getId())) {
-            throw new DataAccessException(format("Event with ID {0} already exist.",
-                                                 entity.getId()));
-        }
 
         return ok(eventConverter.convert(eventService.save(entity)));
     }

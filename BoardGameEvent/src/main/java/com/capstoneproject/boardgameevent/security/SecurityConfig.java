@@ -2,15 +2,20 @@ package com.capstoneproject.boardgameevent.security;
 
 import com.capstoneproject.boardgameevent.entity.User;
 import com.capstoneproject.boardgameevent.repository.UserRepository;
+import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.Optional;
+
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
@@ -21,25 +26,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeRequests()
-                .requestMatchers("/design", "/orders").hasRole("USER")
-                .requestMatchers("/", "/**").permitAll()
-                .and()
-                .formLogin()
-                .loginPage("/index")
-                .and()
+                .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+                        .requestMatchers("/events", "/games", "/places", "/teams").hasRole("USER")
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+                        .requestMatchers("/","/login", "/register", "/img/**", "/js/**", "/css/**", "/register/**").permitAll())
                 .build();
+
     }
 
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepo) {
         return username -> {
-            User user = userRepo.findByUsername(username);
-            if (null != user) {
-                return user;
-            }
-
-            throw new UsernameNotFoundException("User " + username + " not found");
+            Optional<User> user = userRepo.findByUsername(username);
+            return user.orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
         };
     }
 }
