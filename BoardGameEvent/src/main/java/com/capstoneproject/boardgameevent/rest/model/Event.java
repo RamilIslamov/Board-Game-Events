@@ -11,10 +11,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Event {
 
+    private int id;
     private String name;
     private String description;
     private String location;
     private LocalDateTime dateTime;
     private int players;
+    private int currPlayers;
     private int rating;
+    private int gameId;
 }

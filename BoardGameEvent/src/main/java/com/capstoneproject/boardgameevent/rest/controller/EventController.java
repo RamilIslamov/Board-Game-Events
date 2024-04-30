@@ -1,9 +1,14 @@
 package com.capstoneproject.boardgameevent.rest.controller;
 
-import com.capstoneproject.boardgameevent.repository.EventRepository;
 import com.capstoneproject.boardgameevent.rest.converter.EventConverter;
+import com.capstoneproject.boardgameevent.rest.converter.GameConverter;
 import com.capstoneproject.boardgameevent.rest.model.Event;
+import com.capstoneproject.boardgameevent.rest.model.EventForm;
+import com.capstoneproject.boardgameevent.rest.model.Game;
+import com.capstoneproject.boardgameevent.rest.model.ParticipateForm;
 import com.capstoneproject.boardgameevent.service.EventService;
+import com.capstoneproject.boardgameevent.service.GameService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,25 +30,16 @@ import static org.springframework.http.ResponseEntity.ok;
 @Controller
 @RequestMapping(path = "/events")
 @CrossOrigin(origins = "*")
+@AllArgsConstructor
 public class EventController {
 
     private final EventService eventService;
 
     private final EventConverter eventConverter;
 
-    private final EventRepository eventRepository;
+    private final GameService gameService;
 
-    public EventController(final EventService eventService,
-                           final EventConverter eventConverter,
-                           final EventRepository eventRepository) {
-        this.eventService = requireNonNull(eventService,
-                                           "eventService is required to be not null");
-        this.eventConverter = requireNonNull(eventConverter,
-                                             "eventConverter is required to be not null");
-        this.eventRepository = requireNonNull(eventRepository,
-                                              "eventRepository is required to be not null");
-
-    }
+    private final GameConverter gameConverter;
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Event> findById(@PathVariable Integer id) {
@@ -55,16 +51,23 @@ public class EventController {
     @GetMapping
     public String index(Model model) {
         List<Event> events = eventConverter.convert(eventService.findAll());
+        List<Game> games = gameConverter.convert(gameService.findAll());
         events.sort(Comparator.comparingDouble(Event::getRating));
         model.addAttribute("events", events);
+        model.addAttribute("games", games);
         return "/events";
     }
 
     @PostMapping
-    public ResponseEntity<Event> create(@RequestBody Event api) {
+    public ResponseEntity<Event> create(EventForm form) {
+        Event api = form.toEvent();
         com.capstoneproject.boardgameevent.entity.Event entity = eventConverter.convert(api);
-
         return ok(eventConverter.convert(eventService.save(entity)));
+    }
+
+    @PostMapping("/participate")
+    public ResponseEntity<Event> participate(ParticipateForm form) {
+        return ok(eventConverter.convert(eventService.update(form)));
     }
 
     @PutMapping

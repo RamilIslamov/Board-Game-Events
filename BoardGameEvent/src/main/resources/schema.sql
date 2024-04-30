@@ -16,6 +16,7 @@ create table if not exists events
     location varchar(255) not null,
     event_date timestamp not null,
     players integer not null,
+    curr_players integer,
     rating numeric(3,2),
     game_id integer not null references games(id)
 );

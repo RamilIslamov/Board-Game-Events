@@ -112,7 +112,15 @@
                         id="eventPeople1"
                         min="0"
                 />
+                <label for="games">Choose a game:</label>
 
+                <select name="gameId" id="games">
+                    <option th:each="game : ${games}"
+                            th:value="${game.getId()}"
+                            th:text="${game.getName()}"
+                    >
+                    </option>
+                </select>
                 <button type="submit" class="create-event">Create</button>
             </form>
         </div>
@@ -121,13 +129,18 @@
 
 <div class="modal-wrapper2">
     <div class="model-content2">
-        <form class="form-container" action="/home" method="post">
+        <form class="form-container" action="/events/participate" method="post">
             <input
                     placeholder="Event players amount"
                     type="number"
                     name="eventPeople"
                     id="eventPeople"
                     min="0"
+            />
+            <input
+                    type="hidden"
+                    name="eventId"
+                    id="eventId"
             />
             <button type="submit" class="create-event">Add</button>
         </form>
@@ -138,7 +151,7 @@
 <div class="cards-section">
     <h1 class="cards-header">Popular events in my city</h1>
     <div class="container-cards popular-events-container">
-        <div class="card" th:each="event : ${events}">
+        <div class="card" th:each="event : ${events}" th:id="${event.getId()}">
             <div>
                 <img
                         class="card-img"
@@ -242,16 +255,15 @@
                 </div>
                 <div class="part-container">
                     <div class="amount">
-                        <p>
-                  <span
-                  ><svg
-                          class="icon"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                  >
+                        <span
+                        ><svg
+                                class="icon"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
                       <rect width="16" height="16" fill="#F5F5F5"/>
                       <g id="Home page">
                         <rect
@@ -282,7 +294,11 @@
                           </g>
                         </g>
                       </g></svg></span
-                  >4/6
+                        >
+                        <p>
+                            <span th:text="${event.getCurrPlayers()}"></span>
+                            <span>/</span>
+                            <span th:text="${event.getPlayers()}"></span>
                         </p>
                     </div>
                     <div class="participate">

@@ -2,11 +2,11 @@ package com.capstoneproject.boardgameevent.security;
 
 import com.capstoneproject.boardgameevent.entity.User;
 import com.capstoneproject.boardgameevent.repository.UserRepository;
-import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,13 +25,21 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/events", "/games", "/places", "/teams").hasRole("USER")
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/","/login", "/register", "/img/**", "/js/**", "/css/**", "/register/**").permitAll())
-                .build();
+        http.csrf().disable()
+            .authorizeRequests(authorizeRequests -> authorizeRequests
+                    .requestMatchers("/events", "/games", "/places", "/teams").permitAll()
+                    .requestMatchers("/", "/login", "/register", "/img/**", "/js/**", "/css/**", "/register/**").permitAll()
+            )
+            .formLogin(formLogin -> formLogin
+                    .loginPage("/login")
+                    .permitAll().defaultSuccessUrl("/events", true)
+            )
+            .logout(logout -> logout
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll()
+            );
 
+        return http.build();
     }
 
     @Bean
@@ -41,4 +49,5 @@ public class SecurityConfig {
             return user.orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
         };
     }
+
 }

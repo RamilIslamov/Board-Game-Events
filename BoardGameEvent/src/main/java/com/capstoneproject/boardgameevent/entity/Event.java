@@ -36,9 +36,13 @@ public class Event {
     @Column(name = "players")
     private Integer players;
 
+    @Column(name = "curr_players")
+    private Integer currPlayers = 0;
+
     @Column(name = "rating")
     private Float rating;
 
     @Column(name = "game_id")
     private Integer gameId;
+
 }
