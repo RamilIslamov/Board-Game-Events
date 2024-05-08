@@ -8,6 +8,7 @@ import com.capstoneproject.boardgameevent.rest.model.Game;
 import com.capstoneproject.boardgameevent.rest.model.ParticipateForm;
 import com.capstoneproject.boardgameevent.service.EventService;
 import com.capstoneproject.boardgameevent.service.GameService;
+import com.capstoneproject.boardgameevent.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,9 +22,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Comparator;
 import java.util.List;
 
+import static com.capstoneproject.boardgameevent.web.Pages.EVENTS;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -41,6 +42,8 @@ public class EventController {
 
     private final GameConverter gameConverter;
 
+    private final UserService userService;
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<Event> findById(@PathVariable Integer id) {
         requireNonNull(id, "id parameter is required");
@@ -50,24 +53,28 @@ public class EventController {
 
     @GetMapping
     public String index(Model model) {
-        List<Event> events = eventConverter.convert(eventService.findAll());
+        List<Event> events = eventConverter.convert(eventService.findAllByRating());
+        List<Event> userEvents = eventConverter.convert(eventService.findMyEvents());
         List<Game> games = gameConverter.convert(gameService.findAll());
-        events.sort(Comparator.comparingDouble(Event::getRating));
+
         model.addAttribute("events", events);
         model.addAttribute("games", games);
-        return "/events";
+        model.addAttribute("userEvents", userEvents);
+        return EVENTS;
     }
 
     @PostMapping
     public ResponseEntity<Event> create(EventForm form) {
         Event api = form.toEvent();
         com.capstoneproject.boardgameevent.entity.Event entity = eventConverter.convert(api);
+
         return ok(eventConverter.convert(eventService.save(entity)));
     }
 
     @PostMapping("/participate")
-    public ResponseEntity<Event> participate(ParticipateForm form) {
-        return ok(eventConverter.convert(eventService.update(form)));
+    public String participate(ParticipateForm form) {
+        eventService.update(form);
+        return "redirect:" + EVENTS;
     }
 
     @PutMapping

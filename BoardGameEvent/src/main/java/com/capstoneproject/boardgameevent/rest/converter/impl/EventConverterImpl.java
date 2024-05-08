@@ -37,9 +37,10 @@ public class EventConverterImpl implements EventConverter {
         api.setLocation(entity.getLocation());
         api.setPlayers(entity.getPlayers());
         api.setDateTime(entity.getEventDate());
-        api.setId(entity.getId());
+        api.setId(entity.getEvent_id());
         api.setCurrPlayers(entity.getCurrPlayers());
         api.setGameId(entity.getGameId());
+        api.setRating(entity.getRating());
         return api;
     }
 

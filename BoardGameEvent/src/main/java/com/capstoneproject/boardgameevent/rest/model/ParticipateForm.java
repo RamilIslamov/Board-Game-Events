@@ -6,5 +6,4 @@ import lombok.Data;
 public class ParticipateForm {
 
     String eventId;
-    String eventPeople;
 }

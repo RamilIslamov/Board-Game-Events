@@ -1,77 +1,91 @@
 .create-event {
-  border-radius: 12px;
-  background: #42ba58;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  padding: 10px 30px;
-  color: #ffffff;
-  outline: none;
-  border: inherit;
-  transition-duration: 300ms;
+    border-radius: 12px;
+    background: #42ba58;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 10px 30px;
+    color: #ffffff;
+    outline: none;
+    border: inherit;
+    transition-duration: 300ms;
 }
 
 .create-event:hover {
-  background: #3fb254;
-  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.25);
+    background: #3fb254;
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .create-event:focus {
-  outline: none;
-  border: inherit;
+    outline: none;
+    border: inherit;
 }
 
 .card-img {
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 .card:not(:last-child) {
-  margin-right: 16px;
+    margin-right: 16px;
 }
 
 .card-content {
-  display: flex;
-  flex-direction: column;
-  padding: 10px 20px;
-  padding-top: 35px;
-  background: #42ba58;
-  color: #ffffff;
-  font-family: Roboto;
-  font-size: 14px;
-  font-style: normal;
-  height: 100%;
-  font-weight: 400;
-  line-height: 20px; /* 125% */
-  letter-spacing: 0.25px;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    padding-top: 35px;
+    background: #42ba58;
+    color: #ffffff;
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    height: 100%;
+    font-weight: 400;
+    line-height: 20px; /* 125% */
+    letter-spacing: 0.25px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    justify-content: space-between;
 }
 
 .icon-plus {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 
 .participate-btn {
-  outline: none;
-  border: none;
-  background-color: inherit;
-  color: #ffffff;
-  transition: 150ms;
+    outline: none;
+    border: none;
+    background-color: inherit;
+    color: #ffffff;
+    transition: 150ms;
 }
 
 .participate-btn:hover {
-  transform: scale(1.08);
+    transform: scale(1.08);
 }
 
 .participate-btn:focus {
-  outline: none;
-  border: none;
+    outline: none;
+    border: none;
 }
 
 .card:nth-child(n+4) {
-  display: none;
+    display: none;
 }
 
 .card.is-visible {
-  display: flex;
+    display: flex;
+}
+
+.no-btn {
+    background-color: #0046ff;
+    color: white;
+}
+
+.no-btn:hover {
+    background-color: #033dc9;
+    color: white;
+}
+
+.rating-container {
+    margin-bottom: 14px;
 }

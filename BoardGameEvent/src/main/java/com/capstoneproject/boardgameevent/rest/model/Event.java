@@ -18,6 +18,10 @@ public class Event {
     private LocalDateTime dateTime;
     private int players;
     private int currPlayers;
-    private int rating;
+    private float rating;
     private int gameId;
+
+    public boolean isRateable() {
+        return dateTime.isBefore(LocalDateTime.now());
+    }
 }

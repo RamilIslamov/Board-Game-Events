@@ -1,10 +1,15 @@
 package com.capstoneproject.boardgameevent.web;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import static com.capstoneproject.boardgameevent.web.Pages.EVENTS;
+import static com.capstoneproject.boardgameevent.web.Pages.GAMES;
+import static com.capstoneproject.boardgameevent.web.Pages.LOGIN;
+import static com.capstoneproject.boardgameevent.web.Pages.PLACES;
+import static com.capstoneproject.boardgameevent.web.Pages.TEAMS;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -12,11 +17,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
-        registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/games").setViewName("games");
-        registry.addViewController("/places").setViewName("places");
-        registry.addViewController("/events").setViewName("events");
-        registry.addViewController("/teams").setViewName("teams");
+        registry.addViewController(LOGIN).setViewName("login");
+        registry.addViewController(GAMES).setViewName("games");
+        registry.addViewController(PLACES).setViewName("places");
+        registry.addViewController(EVENTS).setViewName("events");
+        registry.addViewController(TEAMS).setViewName("teams");
     }
 
     @Override

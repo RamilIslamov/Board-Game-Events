@@ -60,11 +60,13 @@
             <div class="sd-container">
                 <input class="sd" type="date" name="selected_date"/>
                 <div class="select-wrap">
-                    <select name="color" style="width: 100%">
-                        <option value="">Games</option>
-                        <option value="yellow">Yellow</option>
-                        <option value="red">Red</option>
-                        <option value="green">Green</option>
+                    <label for="gamesSearchBar">Choose a game:</label>
+                    <select name="gameId" id="gamesSearchBar">
+                        <option th:each="game : ${games}"
+                                th:value="${game.getId()}"
+                                th:text="${game.getName()}"
+                        >
+                        </option>
                     </select>
                 </div>
             </div>
@@ -127,23 +129,18 @@
     </div>
 </div>
 
-<div class="modal-wrapper2">
+<div class="modal-wrapper modal-wrapper2">
     <div class="model-content2">
         <form class="form-container" action="/events/participate" method="post">
-            <input
-                    placeholder="Event players amount"
-                    type="number"
-                    name="eventPeople"
-                    id="eventPeople"
-                    min="0"
-            />
             <input
                     type="hidden"
                     name="eventId"
                     id="eventId"
             />
-            <button type="submit" class="create-event">Add</button>
+            <div>Do you want to participate in this event?</div>
+            <button type="submit" class="create-event">Yes</button>
         </form>
+        <button class="create-event no-btn">No</button>
     </div>
 </div>
 
@@ -253,6 +250,15 @@
                         11.09.2001 17:00
                     </p>
                 </div>
+                <div class="rating-container">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.80382 14.3366L6.54399 16.8101C6.38247 16.9414 6.20626 17.0033 6.01537 16.9957C5.82448 16.9887 5.65561 16.9341 5.50877 16.832C5.36193 16.7298 5.24828 16.5912 5.16781 16.4161C5.08676 16.2409 5.08294 16.0512 5.15636 15.8469L6.41183 11.7974L3.21808 9.54285C3.04188 9.42611 2.93175 9.27288 2.88769 9.08318C2.84364 8.89347 2.85098 8.71836 2.90972 8.55784C2.96846 8.39731 3.07124 8.25489 3.21808 8.13056C3.36492 8.00681 3.54113 7.94494 3.7467 7.94494H7.68933L8.96684 3.74221C9.04026 3.53791 9.1542 3.38089 9.30868 3.27115C9.46256 3.162 9.62761 3.10742 9.80382 3.10742C9.98003 3.10742 10.1451 3.162 10.299 3.27115C10.4534 3.38089 10.5674 3.53791 10.6408 3.74221L11.9183 7.94494H15.8609C16.0665 7.94494 16.2427 8.00681 16.3896 8.13056C16.5364 8.25489 16.6392 8.39731 16.6979 8.55784C16.7567 8.71836 16.764 8.89347 16.7199 9.08318C16.6759 9.27288 16.5658 9.42611 16.3896 9.54285L13.1958 11.7974L14.4513 15.8469C14.5247 16.0512 14.5212 16.2409 14.4407 16.4161C14.3597 16.5912 14.2457 16.7298 14.0989 16.832C13.952 16.9341 13.7832 16.9887 13.5923 16.9957C13.4014 17.0033 13.2252 16.9414 13.0636 16.8101L9.80382 14.3366Z"
+                              fill="white"/>
+                    </svg>
+                    <p th:text="${event.getRating()}">
+                    </p>
+                </div>
                 <div class="part-container">
                     <div class="amount">
                         <span
@@ -301,7 +307,7 @@
                             <span th:text="${event.getPlayers()}"></span>
                         </p>
                     </div>
-                    <div class="participate">
+                    <div th:if="${event.getCurrPlayers() < event.getPlayers()}" class="participate">
                         <button class="participate-btn open-modal2">
                             participate
                             <span class="icon-plus"
@@ -352,7 +358,7 @@
 <div class="cards-section">
     <h1 class="cards-header">My events</h1>
     <div class="container-cards my-events-container">
-        <div class="card">
+        <div class="card" th:each="event : ${userEvents}" th:id="${event.getId()}">
             <div>
                 <img
                         class="card-img"
@@ -363,16 +369,15 @@
             </div>
             <div class="card-content">
                 <div class="name">
-                    <h2>
-                <span class="icon"
-                ><svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
+              <span class="icon"
+              ><svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
                     <rect
                             width="20"
                             height="20"
@@ -397,28 +402,23 @@
                               xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAAC5ElEQVR4nO3dz4uNURzH8e+MH4kUmoXFRCmDHUVZWNwF/4KVyF/AQmmMJluxsVBqKLFQYyjKSrqRH6WUJFkI+TELTPkVauKtYx4xmXvduM9zznO+n1fdzV3c55zv95znOffc73MfMxERERERkRoA+oGzwPvidR4YiN0uT8Gf4E/hvf7Y7cseUyO/ldHY7cseU6ecVt7Fbp/3BLyN3b7sAefaJGAsdvuyBwy0uQivjN0+Tyuh0XDOL15jCv6/BbIX2A08BCapzmRxzHDsXvMKOE58I+YRsJF0bDBvgP2kY595AwyRjkHzJkx70rHePAKasSMf2mBeAY3Y0Q9tMM+IOwv8jv5EZkEjdv89z4Jm7H57nwWN2P32PAuasfvrfRY0YvfX8yxoxu6n91nQiN1PERGRVGs9y6Za0hmCP0H1VEvaQa1n2VRLSjWnnVZUS0rcBKiWlPa1nmVTLSmtaz3LplrSFrWeZVMtaaeAdcDH/wj2G2BFxweUX4ClwLMujPi7wILfPlr+BpgH3KJ7woW+R5HvEHCC7htWAjoL/l7K8Q3YqiS0D/4W4Cvl+QCsUhJmDn4fME757gBzlYTpwe8BLlCdg0rA9ATspFrhNLdJSbAfwV8MvKJ694E57pMAHCOePa4TAKwuedXTyaqoz7wijdtUD5jjvZ4vsaMPvAbmmzfFXeqp2GbeABdJx2nzBrhHOm6bN8AN0nHdvAlrcNIxZN4As4FTsSMPnNHmnIiIuAMsjH0FdrkN8ROwNnb0w46seQUMx44+sMs8AhYVO5GxPXb3PaD4EX6MdBw2Z8E/SnqGzMn2w0nSNWiZLzkvkb6R7K4JwHLgAfVxFVhiOQDWdKnOv2phwCyzDL5ohbtU6up5bYt5i/u+XlJ/T0MFh9XwuQBXyMflWj1nANhOfnZYjUb/I/LzBJhlqUvk/6DLstlSBxwiX0csdcA18nXTUge8IF/jljrgE/n6HDu+IiIiIiJitfcdc+lvl4phtYQAAAAASUVORK5CYII="
                       />
                     </defs></svg></span
-                >Chess
+              >
+                    <h2 th:text="${event.getName()}">
                     </h2>
                 </div>
                 <div class="description">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur. In lorem mauris proin
-                        pretium enim sit suspendisse. Tortor tincidunt nunc odio
-                        ultricies rhoncus felis posuere ullamcorper. Ut sit integer quis
-                        velit nullam cursus congue at. In eu diam et vitae pharetra
-                        velit amet.
+                    <p th:text="${event.getDescription()}">
                     </p>
                 </div>
                 <div class="location">
-                    <p>
-                <span class="icon"
-                ><svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                >
+              <span class="icon"
+              ><svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+              >
                     <g clip-path="url(#clip0_138_280)">
                       <path
                               d="M15.0001 6.66699C15.0001 3.90866 12.7584 1.66699 10.0001 1.66699C7.24175 1.66699 5.00008 3.90866 5.00008 6.66699C5.00008 10.417 10.0001 15.8337 10.0001 15.8337C10.0001 15.8337 15.0001 10.417 15.0001 6.66699ZM8.33342 6.66699C8.33342 5.75033 9.08342 5.00033 10.0001 5.00033C10.9167 5.00033 11.6667 5.75033 11.6667 6.66699C11.6667 7.58366 10.9251 8.33366 10.0001 8.33366C9.08342 8.33366 8.33342 7.58366 8.33342 6.66699ZM4.16675 16.667V18.3337H15.8334V16.667H4.16675Z"
@@ -430,20 +430,20 @@
                         <rect width="20" height="20" fill="white"/>
                       </clipPath>
                     </defs></svg></span
-                >Location name
+              >
+                    <p th:text="${event.getLocation()}">
                     </p>
                 </div>
                 <div class="time">
-                    <p>
-                <span
-                ><svg
-                        class="icon"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                >
+              <span
+              ><svg
+                      class="icon"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+              >
                     <g clip-path="url(#clip0_138_286)">
                       <path
                               d="M15.8333 3.33366H15V1.66699H13.3333V3.33366H6.66667V1.66699H5V3.33366H4.16667C3.24167 3.33366 2.50833 4.08366 2.50833 5.00033L2.5 16.667C2.5 17.5837 3.24167 18.3337 4.16667 18.3337H15.8333C16.75 18.3337 17.5 17.5837 17.5 16.667V5.00033C17.5 4.08366 16.75 3.33366 15.8333 3.33366ZM15.8333 16.667H4.16667V8.33366H15.8333V16.667ZM7.5 11.667H5.83333V10.0003H7.5V11.667ZM10.8333 11.667H9.16667V10.0003H10.8333V11.667ZM14.1667 11.667H12.5V10.0003H14.1667V11.667ZM7.5 15.0003H5.83333V13.3337H7.5V15.0003ZM10.8333 15.0003H9.16667V13.3337H10.8333V15.0003ZM14.1667 15.0003H12.5V13.3337H14.1667V15.0003Z"
@@ -455,193 +455,34 @@
                         <rect width="20" height="20" fill="white"/>
                       </clipPath>
                     </defs></svg></span
-                >11.09.2001 17:00
+              >
+                    <p th:text="${event.getDateTime()}">
+                        11.09.2001 17:00
                     </p>
                 </div>
-                <div class="part-container">
-                    <div class="amount">
-                        <p>
-                  <span
-                  ><svg
-                          class="icon"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                  >
-                      <rect width="16" height="16" fill="#F5F5F5"/>
-                      <g id="Home page">
-                        <rect
-                                width="1440"
-                                height="3048"
-                                transform="translate(-130 -877)"
-                                fill="white"
-                        />
-                        <g id="Event card">
-                          <rect
-                                  x="-10"
-                                  y="-441"
-                                  width="389"
-                                  height="464"
-                                  rx="6"
-                                  fill="#42BA58"
-                          />
-                          <g id="Frame 28">
-                            <g id="Frame 23">
-                              <g id="Frame 14">
-                                <path
-                                        id="Vector"
-                                        d="M8 8C6.9 8 5.95833 7.60833 5.175 6.825C4.39167 6.04167 4 5.1 4 4C4 2.9 4.39167 1.95833 5.175 1.175C5.95833 0.391667 6.9 0 8 0C9.1 0 10.0417 0.391667 10.825 1.175C11.6083 1.95833 12 2.9 12 4C12 5.1 11.6083 6.04167 10.825 6.825C10.0417 7.60833 9.1 8 8 8ZM2 16C1.45 16 0.979333 15.8043 0.588 15.413C0.196 15.021 0 14.55 0 14V13.2C0 12.6333 0.146 12.1123 0.438 11.637C0.729334 11.1623 1.11667 10.8 1.6 10.55C2.63333 10.0333 3.68333 9.64567 4.75 9.387C5.81667 9.129 6.9 9 8 9C9.1 9 10.1833 9.129 11.25 9.387C12.3167 9.64567 13.3667 10.0333 14.4 10.55C14.8833 10.8 15.2707 11.1623 15.562 11.637C15.854 12.1123 16 12.6333 16 13.2V14C16 14.55 15.8043 15.021 15.413 15.413C15.021 15.8043 14.55 16 14 16H2Z"
-                                        fill="white"
-                                />
-                              </g>
-                            </g>
-                          </g>
-                        </g>
-                      </g></svg></span
-                  >4/6
-                        </p>
-                    </div>
-                    <div class="participate">
-                        <button class="participate-btn">
-                            participate
-                            <span class="icon-plus"
-                            ><svg
-                                    width="26"
-                                    height="26"
-                                    viewBox="0 0 26 26"
-                                    xmlns="http://www.w3.org/2000/svg"
-                            >
-                      <path
-                              d="M14.25 6.75H11.75V11.75H6.75V14.25H11.75V19.25H14.25V14.25H19.25V11.75H14.25V6.75ZM13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM13 23C7.4875 23 3 18.5125 3 13C3 7.4875 7.4875 3 13 3C18.5125 3 23 7.4875 23 13C23 18.5125 18.5125 23 13 23Z"
-                              fill="white"
-                      />
-                    </svg>
+                <div th:if="${event.isRateable()}" class="rate">
+                    <button class="rate-btn open-modal2">
+                        rate
+                        <span class="rate-star"
+                        ><svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                              xmlns="http://www.w3.org/2000/svg">
+<path d="M9.80382 14.3366L6.54399 16.8101C6.38247 16.9414 6.20626 17.0033 6.01537 16.9957C5.82448 16.9887 5.65561 16.9341 5.50877 16.832C5.36193 16.7298 5.24828 16.5912 5.16781 16.4161C5.08676 16.2409 5.08294 16.0512 5.15636 15.8469L6.41183 11.7974L3.21808 9.54285C3.04188 9.42611 2.93175 9.27288 2.88769 9.08318C2.84364 8.89347 2.85098 8.71836 2.90972 8.55784C2.96846 8.39731 3.07124 8.25489 3.21808 8.13056C3.36492 8.00681 3.54113 7.94494 3.7467 7.94494H7.68933L8.96684 3.74221C9.04026 3.53791 9.1542 3.38089 9.30868 3.27115C9.46256 3.162 9.62761 3.10742 9.80382 3.10742C9.98003 3.10742 10.1451 3.162 10.299 3.27115C10.4534 3.38089 10.5674 3.53791 10.6408 3.74221L11.9183 7.94494H15.8609C16.0665 7.94494 16.2427 8.00681 16.3896 8.13056C16.5364 8.25489 16.6392 8.39731 16.6979 8.55784C16.7567 8.71836 16.764 8.89347 16.7199 9.08318C16.6759 9.27288 16.5658 9.42611 16.3896 9.54285L13.1958 11.7974L14.4513 15.8469C14.5247 16.0512 14.5212 16.2409 14.4407 16.4161C14.3597 16.5912 14.2457 16.7298 14.0989 16.832C13.952 16.9341 13.7832 16.9887 13.5923 16.9957C13.4014 17.0033 13.2252 16.9414 13.0636 16.8101L9.80382 14.3366Z"
+      fill="white"/>
+</svg>
                   </span>
-                        </button>
-                    </div>
+                    </button>
                 </div>
-            </div>
-        </div>
-        <div class="card">
-            <div>
-                <img
-                        class="card-img"
-                        src="/img/card-image.png"
-                        alt="Event img"
-                        width="100%"
-                />
-            </div>
-            <div class="card-content">
-                <div class="name">
-                    <h2>
-                <span class="icon"
-                ><svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                    <rect
-                            width="20"
-                            height="20"
-                            fill="url(#pattern0_129_275)"
-                    />
-                    <defs>
-                      <pattern
-                              id="pattern0_129_275"
-                              patternContentUnits="objectBoundingBox"
-                              width="1"
-                              height="1"
-                      >
-                        <use
-                                xlink:href="#image0_129_275"
-                                transform="scale(0.0104167)"
-                        />
-                      </pattern>
-                      <image
-                              id="image0_129_275"
-                              width="96"
-                              height="96"
-                              xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAAC5ElEQVR4nO3dz4uNURzH8e+MH4kUmoXFRCmDHUVZWNwF/4KVyF/AQmmMJluxsVBqKLFQYyjKSrqRH6WUJFkI+TELTPkVauKtYx4xmXvduM9zznO+n1fdzV3c55zv95znOffc73MfMxERERERkRoA+oGzwPvidR4YiN0uT8Gf4E/hvf7Y7cseUyO/ldHY7cseU6ecVt7Fbp/3BLyN3b7sAefaJGAsdvuyBwy0uQivjN0+Tyuh0XDOL15jCv6/BbIX2A08BCapzmRxzHDsXvMKOE58I+YRsJF0bDBvgP2kY595AwyRjkHzJkx70rHePAKasSMf2mBeAY3Y0Q9tMM+IOwv8jv5EZkEjdv89z4Jm7H57nwWN2P32PAuasfvrfRY0YvfX8yxoxu6n91nQiN1PERGRVGs9y6Za0hmCP0H1VEvaQa1n2VRLSjWnnVZUS0rcBKiWlPa1nmVTLSmtaz3LplrSFrWeZVMtaaeAdcDH/wj2G2BFxweUX4ClwLMujPi7wILfPlr+BpgH3KJ7woW+R5HvEHCC7htWAjoL/l7K8Q3YqiS0D/4W4Cvl+QCsUhJmDn4fME757gBzlYTpwe8BLlCdg0rA9ATspFrhNLdJSbAfwV8MvKJ694E57pMAHCOePa4TAKwuedXTyaqoz7wijdtUD5jjvZ4vsaMPvAbmmzfFXeqp2GbeABdJx2nzBrhHOm6bN8AN0nHdvAlrcNIxZN4As4FTsSMPnNHmnIiIuAMsjH0FdrkN8ROwNnb0w46seQUMx44+sMs8AhYVO5GxPXb3PaD4EX6MdBw2Z8E/SnqGzMn2w0nSNWiZLzkvkb6R7K4JwHLgAfVxFVhiOQDWdKnOv2phwCyzDL5ohbtU6up5bYt5i/u+XlJ/T0MFh9XwuQBXyMflWj1nANhOfnZYjUb/I/LzBJhlqUvk/6DLstlSBxwiX0csdcA18nXTUge8IF/jljrgE/n6HDu+IiIiIiJitfcdc+lvl4phtYQAAAAASUVORK5CYII="
-                      />
-                    </defs></svg></span
-                >Chess
-                    </h2>
-                </div>
-                <div class="description">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur. In lorem mauris proin
-                        pretium enim sit suspendisse. Tortor tincidunt nunc odio
-                        ultricies rhoncus felis posuere ullamcorper. Ut sit integer quis
-                        velit nullam cursus congue at. In eu diam et vitae pharetra
-                        velit amet.
-                    </p>
-                </div>
-                <div class="location">
-                    <p>
-                <span class="icon"
-                ><svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                >
-                    <g clip-path="url(#clip0_138_280)">
-                      <path
-                              d="M15.0001 6.66699C15.0001 3.90866 12.7584 1.66699 10.0001 1.66699C7.24175 1.66699 5.00008 3.90866 5.00008 6.66699C5.00008 10.417 10.0001 15.8337 10.0001 15.8337C10.0001 15.8337 15.0001 10.417 15.0001 6.66699ZM8.33342 6.66699C8.33342 5.75033 9.08342 5.00033 10.0001 5.00033C10.9167 5.00033 11.6667 5.75033 11.6667 6.66699C11.6667 7.58366 10.9251 8.33366 10.0001 8.33366C9.08342 8.33366 8.33342 7.58366 8.33342 6.66699ZM4.16675 16.667V18.3337H15.8334V16.667H4.16675Z"
-                              fill="white"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_138_280">
-                        <rect width="20" height="20" fill="white"/>
-                      </clipPath>
-                    </defs></svg></span
-                >Location name
-                    </p>
-                </div>
-                <div class="time">
-                    <p>
-                <span
-                ><svg
-                        class="icon"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                >
-                    <g clip-path="url(#clip0_138_286)">
-                      <path
-                              d="M15.8333 3.33366H15V1.66699H13.3333V3.33366H6.66667V1.66699H5V3.33366H4.16667C3.24167 3.33366 2.50833 4.08366 2.50833 5.00033L2.5 16.667C2.5 17.5837 3.24167 18.3337 4.16667 18.3337H15.8333C16.75 18.3337 17.5 17.5837 17.5 16.667V5.00033C17.5 4.08366 16.75 3.33366 15.8333 3.33366ZM15.8333 16.667H4.16667V8.33366H15.8333V16.667ZM7.5 11.667H5.83333V10.0003H7.5V11.667ZM10.8333 11.667H9.16667V10.0003H10.8333V11.667ZM14.1667 11.667H12.5V10.0003H14.1667V11.667ZM7.5 15.0003H5.83333V13.3337H7.5V15.0003ZM10.8333 15.0003H9.16667V13.3337H10.8333V15.0003ZM14.1667 15.0003H12.5V13.3337H14.1667V15.0003Z"
-                              fill="white"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_138_286">
-                        <rect width="20" height="20" fill="white"/>
-                      </clipPath>
-                    </defs></svg></span
-                >11.09.2001 17:00
-                    </p>
-                </div>
-                <div class="part-container">
+                <div th:if="${!event.isRateable()}" class="part-container">
                     <div class="amount">
-                        <p>
-                  <span
-                  ><svg
-                          class="icon"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                  >
+                        <span
+                        ><svg
+                                class="icon"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
                       <rect width="16" height="16" fill="#F5F5F5"/>
                       <g id="Home page">
                         <rect
@@ -672,196 +513,22 @@
                           </g>
                         </g>
                       </g></svg></span
-                  >4/6
-                        </p>
-                    </div>
-                    <div class="participate">
-                        <button class="participate-btn">
-                            participate
-                            <span class="icon-plus"
-                            ><svg
-                                    width="26"
-                                    height="26"
-                                    viewBox="0 0 26 26"
-                                    xmlns="http://www.w3.org/2000/svg"
-                            >
-                      <path
-                              d="M14.25 6.75H11.75V11.75H6.75V14.25H11.75V19.25H14.25V14.25H19.25V11.75H14.25V6.75ZM13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM13 23C7.4875 23 3 18.5125 3 13C3 7.4875 7.4875 3 13 3C18.5125 3 23 7.4875 23 13C23 18.5125 18.5125 23 13 23Z"
-                              fill="white"
-                      />
-                    </svg>
-                  </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div>
-                <img
-                        class="card-img"
-                        src="/img/card-image.png"
-                        alt="Event img"
-                        width="100%"
-                />
-            </div>
-            <div class="card-content">
-                <div class="name">
-                    <h2>
-                <span class="icon"
-                ><svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                >
-                    <rect
-                            width="20"
-                            height="20"
-                            fill="url(#pattern0_129_275)"
-                    />
-                    <defs>
-                      <pattern
-                              id="pattern0_129_275"
-                              patternContentUnits="objectBoundingBox"
-                              width="1"
-                              height="1"
-                      >
-                        <use
-                                xlink:href="#image0_129_275"
-                                transform="scale(0.0104167)"
-                        />
-                      </pattern>
-                      <image
-                              id="image0_129_275"
-                              width="96"
-                              height="96"
-                              xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAAC5ElEQVR4nO3dz4uNURzH8e+MH4kUmoXFRCmDHUVZWNwF/4KVyF/AQmmMJluxsVBqKLFQYyjKSrqRH6WUJFkI+TELTPkVauKtYx4xmXvduM9zznO+n1fdzV3c55zv95znOffc73MfMxERERERkRoA+oGzwPvidR4YiN0uT8Gf4E/hvf7Y7cseUyO/ldHY7cseU6ecVt7Fbp/3BLyN3b7sAefaJGAsdvuyBwy0uQivjN0+Tyuh0XDOL15jCv6/BbIX2A08BCapzmRxzHDsXvMKOE58I+YRsJF0bDBvgP2kY595AwyRjkHzJkx70rHePAKasSMf2mBeAY3Y0Q9tMM+IOwv8jv5EZkEjdv89z4Jm7H57nwWN2P32PAuasfvrfRY0YvfX8yxoxu6n91nQiN1PERGRVGs9y6Za0hmCP0H1VEvaQa1n2VRLSjWnnVZUS0rcBKiWlPa1nmVTLSmtaz3LplrSFrWeZVMtaaeAdcDH/wj2G2BFxweUX4ClwLMujPi7wILfPlr+BpgH3KJ7woW+R5HvEHCC7htWAjoL/l7K8Q3YqiS0D/4W4Cvl+QCsUhJmDn4fME757gBzlYTpwe8BLlCdg0rA9ATspFrhNLdJSbAfwV8MvKJ694E57pMAHCOePa4TAKwuedXTyaqoz7wijdtUD5jjvZ4vsaMPvAbmmzfFXeqp2GbeABdJx2nzBrhHOm6bN8AN0nHdvAlrcNIxZN4As4FTsSMPnNHmnIiIuAMsjH0FdrkN8ROwNnb0w46seQUMx44+sMs8AhYVO5GxPXb3PaD4EX6MdBw2Z8E/SnqGzMn2w0nSNWiZLzkvkb6R7K4JwHLgAfVxFVhiOQDWdKnOv2phwCyzDL5ohbtU6up5bYt5i/u+XlJ/T0MFh9XwuQBXyMflWj1nANhOfnZYjUb/I/LzBJhlqUvk/6DLstlSBxwiX0csdcA18nXTUge8IF/jljrgE/n6HDu+IiIiIiJitfcdc+lvl4phtYQAAAAASUVORK5CYII="
-                      />
-                    </defs></svg></span
-                >Chess
-                    </h2>
-                </div>
-                <div class="description">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur. In lorem mauris proin
-                        pretium enim sit suspendisse. Tortor tincidunt nunc odio
-                        ultricies rhoncus felis posuere ullamcorper. Ut sit integer quis
-                        velit nullam cursus congue at. In eu diam et vitae pharetra
-                        velit amet.
-                    </p>
-                </div>
-                <div class="location">
-                    <p>
-                <span class="icon"
-                ><svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                >
-                    <g clip-path="url(#clip0_138_280)">
-                      <path
-                              d="M15.0001 6.66699C15.0001 3.90866 12.7584 1.66699 10.0001 1.66699C7.24175 1.66699 5.00008 3.90866 5.00008 6.66699C5.00008 10.417 10.0001 15.8337 10.0001 15.8337C10.0001 15.8337 15.0001 10.417 15.0001 6.66699ZM8.33342 6.66699C8.33342 5.75033 9.08342 5.00033 10.0001 5.00033C10.9167 5.00033 11.6667 5.75033 11.6667 6.66699C11.6667 7.58366 10.9251 8.33366 10.0001 8.33366C9.08342 8.33366 8.33342 7.58366 8.33342 6.66699ZM4.16675 16.667V18.3337H15.8334V16.667H4.16675Z"
-                              fill="white"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_138_280">
-                        <rect width="20" height="20" fill="white"/>
-                      </clipPath>
-                    </defs></svg></span
-                >Location name
-                    </p>
-                </div>
-                <div class="time">
-                    <p>
-                <span
-                ><svg
-                        class="icon"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                >
-                    <g clip-path="url(#clip0_138_286)">
-                      <path
-                              d="M15.8333 3.33366H15V1.66699H13.3333V3.33366H6.66667V1.66699H5V3.33366H4.16667C3.24167 3.33366 2.50833 4.08366 2.50833 5.00033L2.5 16.667C2.5 17.5837 3.24167 18.3337 4.16667 18.3337H15.8333C16.75 18.3337 17.5 17.5837 17.5 16.667V5.00033C17.5 4.08366 16.75 3.33366 15.8333 3.33366ZM15.8333 16.667H4.16667V8.33366H15.8333V16.667ZM7.5 11.667H5.83333V10.0003H7.5V11.667ZM10.8333 11.667H9.16667V10.0003H10.8333V11.667ZM14.1667 11.667H12.5V10.0003H14.1667V11.667ZM7.5 15.0003H5.83333V13.3337H7.5V15.0003ZM10.8333 15.0003H9.16667V13.3337H10.8333V15.0003ZM14.1667 15.0003H12.5V13.3337H14.1667V15.0003Z"
-                              fill="white"
-                      />
-                    </g>
-                    <defs>
-                      <clipPath id="clip0_138_286">
-                        <rect width="20" height="20" fill="white"/>
-                      </clipPath>
-                    </defs></svg></span
-                >11.09.2001 17:00
-                    </p>
-                </div>
-                <div class="part-container">
-                    <div class="amount">
+                        >
                         <p>
-                  <span
-                  ><svg
-                          class="icon"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                  >
-                      <rect width="16" height="16" fill="#F5F5F5"/>
-                      <g id="Home page">
-                        <rect
-                                width="1440"
-                                height="3048"
-                                transform="translate(-130 -877)"
-                                fill="white"
-                        />
-                        <g id="Event card">
-                          <rect
-                                  x="-10"
-                                  y="-441"
-                                  width="389"
-                                  height="464"
-                                  rx="6"
-                                  fill="#42BA58"
-                          />
-                          <g id="Frame 28">
-                            <g id="Frame 23">
-                              <g id="Frame 14">
-                                <path
-                                        id="Vector"
-                                        d="M8 8C6.9 8 5.95833 7.60833 5.175 6.825C4.39167 6.04167 4 5.1 4 4C4 2.9 4.39167 1.95833 5.175 1.175C5.95833 0.391667 6.9 0 8 0C9.1 0 10.0417 0.391667 10.825 1.175C11.6083 1.95833 12 2.9 12 4C12 5.1 11.6083 6.04167 10.825 6.825C10.0417 7.60833 9.1 8 8 8ZM2 16C1.45 16 0.979333 15.8043 0.588 15.413C0.196 15.021 0 14.55 0 14V13.2C0 12.6333 0.146 12.1123 0.438 11.637C0.729334 11.1623 1.11667 10.8 1.6 10.55C2.63333 10.0333 3.68333 9.64567 4.75 9.387C5.81667 9.129 6.9 9 8 9C9.1 9 10.1833 9.129 11.25 9.387C12.3167 9.64567 13.3667 10.0333 14.4 10.55C14.8833 10.8 15.2707 11.1623 15.562 11.637C15.854 12.1123 16 12.6333 16 13.2V14C16 14.55 15.8043 15.021 15.413 15.413C15.021 15.8043 14.55 16 14 16H2Z"
-                                        fill="white"
-                                />
-                              </g>
-                            </g>
-                          </g>
-                        </g>
-                      </g></svg></span
-                  >4/6
+                            <span th:text="${event.getCurrPlayers()}"></span>
+                            <span>/</span>
+                            <span th:text="${event.getPlayers()}"></span>
                         </p>
                     </div>
                     <div class="participate">
-                        <button class="participate-btn">
-                            participate
+                        <button class="participate-btn open-modal2">
+                            exit event
                             <span class="icon-plus"
-                            ><svg
-                                    width="26"
-                                    height="26"
-                                    viewBox="0 0 26 26"
-                                    xmlns="http://www.w3.org/2000/svg"
-                            >
-                      <path
-                              d="M14.25 6.75H11.75V11.75H6.75V14.25H11.75V19.25H14.25V14.25H19.25V11.75H14.25V6.75ZM13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM13 23C7.4875 23 3 18.5125 3 13C3 7.4875 7.4875 3 13 3C18.5125 3 23 7.4875 23 13C23 18.5125 18.5125 23 13 23Z"
-                              fill="white"
-                      />
-                    </svg>
+                            ><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                  xmlns="http://www.w3.org/2000/svg">
+<path d="M15 12H9M21 12C21 13.1819 20.7672 14.3522 20.3149 15.4442C19.8626 16.5361 19.1997 17.5282 18.364 18.364C17.5282 19.1997 16.5361 19.8626 15.4442 20.3149C14.3522 20.7672 13.1819 21 12 21C10.8181 21 9.64778 20.7672 8.55585 20.3149C7.46392 19.8626 6.47177 19.1997 5.63604 18.364C4.80031 17.5282 4.13738 16.5361 3.68508 15.4442C3.23279 14.3522 3 13.1819 3 12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12Z"
+      stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
                   </span>
                         </button>
                     </div>
@@ -869,7 +536,7 @@
             </div>
         </div>
     </div>
-    <button class="my-events show-more">
+    <button class="show-more my-events">
         Show more
         <span>
           <svg
