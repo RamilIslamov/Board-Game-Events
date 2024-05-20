@@ -1,11 +1,14 @@
 package com.capstoneproject.boardgameevent.rest.controller;
 
+import com.capstoneproject.boardgameevent.exception.ActionAlreadyPerformedException;
 import com.capstoneproject.boardgameevent.rest.converter.EventConverter;
 import com.capstoneproject.boardgameevent.rest.converter.GameConverter;
 import com.capstoneproject.boardgameevent.rest.model.Event;
 import com.capstoneproject.boardgameevent.rest.model.EventForm;
+import com.capstoneproject.boardgameevent.rest.model.ExitForm;
 import com.capstoneproject.boardgameevent.rest.model.Game;
 import com.capstoneproject.boardgameevent.rest.model.ParticipateForm;
+import com.capstoneproject.boardgameevent.rest.model.RateForm;
 import com.capstoneproject.boardgameevent.service.EventService;
 import com.capstoneproject.boardgameevent.service.GameService;
 import com.capstoneproject.boardgameevent.service.UserService;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -54,26 +58,50 @@ public class EventController {
     @GetMapping
     public String index(Model model) {
         List<Event> events = eventConverter.convert(eventService.findAllByRating());
+        List<Event> closestEvents = eventConverter.convert(eventService.findAllByDate());
         List<Event> userEvents = eventConverter.convert(eventService.findMyEvents());
         List<Game> games = gameConverter.convert(gameService.findAll());
 
         model.addAttribute("events", events);
         model.addAttribute("games", games);
         model.addAttribute("userEvents", userEvents);
+        model.addAttribute("closestEvents", closestEvents);
         return EVENTS;
     }
 
     @PostMapping
-    public ResponseEntity<Event> create(EventForm form) {
+    public String create(EventForm form) {
         Event api = form.toEvent();
         com.capstoneproject.boardgameevent.entity.Event entity = eventConverter.convert(api);
-
-        return ok(eventConverter.convert(eventService.save(entity)));
+        eventService.save(entity);
+        return "redirect:" + EVENTS;
     }
 
     @PostMapping("/participate")
-    public String participate(ParticipateForm form) {
-        eventService.update(form);
+    public String participate(ParticipateForm form, RedirectAttributes redirectAttributes) {
+        try {
+            eventService.participate(form);
+        } catch (ActionAlreadyPerformedException e) {
+            redirectAttributes.addFlashAttribute("errorParticipate", e.getMessage());
+            return "redirect:" + EVENTS;
+        }
+        return "redirect:" + EVENTS;
+    }
+
+    @PostMapping("/exit")
+    public String exit(ExitForm form) {
+        eventService.exit(form);
+        return "redirect:" + EVENTS;
+    }
+
+    @PostMapping("/rate")
+    public String rate(RateForm form, RedirectAttributes redirectAttributes) {
+        try {
+            eventService.rate(form);
+        } catch (ActionAlreadyPerformedException e) {
+            redirectAttributes.addFlashAttribute("errorRate", e.getMessage());
+            return "redirect:" + EVENTS;
+        }
         return "redirect:" + EVENTS;
     }
 

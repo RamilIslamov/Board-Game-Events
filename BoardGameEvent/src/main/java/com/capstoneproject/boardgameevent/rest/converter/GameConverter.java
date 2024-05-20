@@ -10,5 +10,5 @@ public interface GameConverter {
 
     com.capstoneproject.boardgameevent.rest.model.Game convert(Game entity);
 
-    List<com.capstoneproject.boardgameevent.rest.model.Game> convert(List<Game> events);
+    List<com.capstoneproject.boardgameevent.rest.model.Game> convert(List<Game> games);
 }

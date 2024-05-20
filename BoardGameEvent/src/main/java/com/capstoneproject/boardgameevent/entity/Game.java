@@ -2,12 +2,16 @@ package com.capstoneproject.boardgameevent.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -34,4 +38,10 @@ public class Game {
     @Column(name = "rules")
     private String rules;
 
+    @Column(name = "genre")
+    @Enumerated(EnumType.STRING)
+    private Genre genre;
+
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
 }

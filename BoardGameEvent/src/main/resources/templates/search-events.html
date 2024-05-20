@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/common.css"/>
+    <link rel="stylesheet" href="/css/events.css"/>
+    <link rel="stylesheet" href="/css/modal.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <script src="/js/modal.js"></script>
+    <script src="/js/show-more.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+            rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+            rel="stylesheet"
+    />
+
+    <title>Events</title>
+</head>
+<body>
+<div class="home-header">
+    <div>
+        <img src="/img/Logo.png" alt="Logo"/>
+    </div>
+    <ul class="home-list">
+        <li><a class="ref" href="/events">Events</a></li>
+        <li><a class="ref" href="/games">Games</a></li>
+        <li><a class="ref" href="/teams">Teams</a></li>
+        <li><a class="ref" href="/places">Places</a></li>
+    </ul>
+    <div><img src="/img/Avatar.png" alt="Avatar"/></div>
+</div>
+
+<div class="modal-wrapper modal-wrapper2">
+    <div class="model-content2">
+        <form class="form-container" action="/events/participate" method="post">
+            <input
+                    type="hidden"
+                    name="eventId"
+                    id="eventId"
+            />
+            <div>Do you want to participate in this event?</div>
+            <button type="submit" class="create-event">Yes</button>
+        </form>
+        <button class="create-event no-btn">No</button>
+    </div>
+</div>
+
+
+<div class="cards-section">
+    <h1 class="cards-header">Search results</h1>
+    <div th:if="${searchResults == null}">
+        <p>No search results found.</p>
+    </div>
+    <div class="container-cards search-events-container">
+        <div class="card" th:each="event : ${searchResults}" th:id="${event.getId()}">
+            <div>
+                <img
+                        class="card-img"
+                        src="/img/card-image.png"
+                        alt="Event img"
+                        width="100%"
+                />
+            </div>
+            <div class="card-content">
+                <div class="name">
+              <span class="icon"
+              ><svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+              >
+                    <rect
+                            width="20"
+                            height="20"
+                            fill="url(#pattern0_129_275)"
+                    />
+                    <defs>
+                      <pattern
+                              id="pattern0_129_275"
+                              patternContentUnits="objectBoundingBox"
+                              width="1"
+                              height="1"
+                      >
+                        <use
+                                xlink:href="#image0_129_275"
+                                transform="scale(0.0104167)"
+                        />
+                      </pattern>
+                      <image
+                              id="image0_129_275"
+                              width="96"
+                              height="96"
+                              xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAAsTAAALEwEAmpwYAAAC5ElEQVR4nO3dz4uNURzH8e+MH4kUmoXFRCmDHUVZWNwF/4KVyF/AQmmMJluxsVBqKLFQYyjKSrqRH6WUJFkI+TELTPkVauKtYx4xmXvduM9zznO+n1fdzV3c55zv95znOffc73MfMxERERERkRoA+oGzwPvidR4YiN0uT8Gf4E/hvf7Y7cseUyO/ldHY7cseU6ecVt7Fbp/3BLyN3b7sAefaJGAsdvuyBwy0uQivjN0+Tyuh0XDOL15jCv6/BbIX2A08BCapzmRxzHDsXvMKOE58I+YRsJF0bDBvgP2kY595AwyRjkHzJkx70rHePAKasSMf2mBeAY3Y0Q9tMM+IOwv8jv5EZkEjdv89z4Jm7H57nwWN2P32PAuasfvrfRY0YvfX8yxoxu6n91nQiN1PERGRVGs9y6Za0hmCP0H1VEvaQa1n2VRLSjWnnVZUS0rcBKiWlPa1nmVTLSmtaz3LplrSFrWeZVMtaaeAdcDH/wj2G2BFxweUX4ClwLMujPi7wILfPlr+BpgH3KJ7woW+R5HvEHCC7htWAjoL/l7K8Q3YqiS0D/4W4Cvl+QCsUhJmDn4fME757gBzlYTpwe8BLlCdg0rA9ATspFrhNLdJSbAfwV8MvKJ694E57pMAHCOePa4TAKwuedXTyaqoz7wijdtUD5jjvZ4vsaMPvAbmmzfFXeqp2GbeABdJx2nzBrhHOm6bN8AN0nHdvAlrcNIxZN4As4FTsSMPnNHmnIiIuAMsjH0FdrkN8ROwNnb0w46seQUMx44+sMs8AhYVO5GxPXb3PaD4EX6MdBw2Z8E/SnqGzMn2w0nSNWiZLzkvkb6R7K4JwHLgAfVxFVhiOQDWdKnOv2phwCyzDL5ohbtU6up5bYt5i/u+XlJ/T0MFh9XwuQBXyMflWj1nANhOfnZYjUb/I/LzBJhlqUvk/6DLstlSBxwiX0csdcA18nXTUge8IF/jljrgE/n6HDu+IiIiIiJitfcdc+lvl4phtYQAAAAASUVORK5CYII="
+                      />
+                    </defs></svg></span
+              >
+                    <h2 th:text="${event.getName()}">
+                    </h2>
+                </div>
+                <div class="description">
+                    <p th:text="${event.getDescription()}">
+                    </p>
+                </div>
+                <div class="location">
+              <span class="icon"
+              ><svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+              >
+                    <g clip-path="url(#clip0_138_280)">
+                      <path
+                              d="M15.0001 6.66699C15.0001 3.90866 12.7584 1.66699 10.0001 1.66699C7.24175 1.66699 5.00008 3.90866 5.00008 6.66699C5.00008 10.417 10.0001 15.8337 10.0001 15.8337C10.0001 15.8337 15.0001 10.417 15.0001 6.66699ZM8.33342 6.66699C8.33342 5.75033 9.08342 5.00033 10.0001 5.00033C10.9167 5.00033 11.6667 5.75033 11.6667 6.66699C11.6667 7.58366 10.9251 8.33366 10.0001 8.33366C9.08342 8.33366 8.33342 7.58366 8.33342 6.66699ZM4.16675 16.667V18.3337H15.8334V16.667H4.16675Z"
+                              fill="white"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_138_280">
+                        <rect width="20" height="20" fill="white"/>
+                      </clipPath>
+                    </defs></svg></span
+              >
+                    <p th:text="${event.getLocation()}">
+                    </p>
+                </div>
+                <div class="time">
+              <span
+              ><svg
+                      class="icon"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+              >
+                    <g clip-path="url(#clip0_138_286)">
+                      <path
+                              d="M15.8333 3.33366H15V1.66699H13.3333V3.33366H6.66667V1.66699H5V3.33366H4.16667C3.24167 3.33366 2.50833 4.08366 2.50833 5.00033L2.5 16.667C2.5 17.5837 3.24167 18.3337 4.16667 18.3337H15.8333C16.75 18.3337 17.5 17.5837 17.5 16.667V5.00033C17.5 4.08366 16.75 3.33366 15.8333 3.33366ZM15.8333 16.667H4.16667V8.33366H15.8333V16.667ZM7.5 11.667H5.83333V10.0003H7.5V11.667ZM10.8333 11.667H9.16667V10.0003H10.8333V11.667ZM14.1667 11.667H12.5V10.0003H14.1667V11.667ZM7.5 15.0003H5.83333V13.3337H7.5V15.0003ZM10.8333 15.0003H9.16667V13.3337H10.8333V15.0003ZM14.1667 15.0003H12.5V13.3337H14.1667V15.0003Z"
+                              fill="white"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_138_286">
+                        <rect width="20" height="20" fill="white"/>
+                      </clipPath>
+                    </defs></svg></span
+              >
+                    <p th:text="${event.getDateTime()}">
+                        11.09.2001 17:00
+                    </p>
+                </div>
+                <div class="part-container">
+                    <div class="amount">
+                        <span
+                        ><svg
+                                class="icon"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                        >
+                      <rect width="16" height="16" fill="#F5F5F5"/>
+                      <g id="Home page">
+                        <rect
+                                width="1440"
+                                height="3048"
+                                transform="translate(-130 -877)"
+                                fill="white"
+                        />
+                        <g id="Event card">
+                          <rect
+                                  x="-10"
+                                  y="-441"
+                                  width="389"
+                                  height="464"
+                                  rx="6"
+                                  fill="#42BA58"
+                          />
+                          <g id="Frame 28">
+                            <g id="Frame 23">
+                              <g id="Frame 14">
+                                <path
+                                        id="Vector"
+                                        d="M8 8C6.9 8 5.95833 7.60833 5.175 6.825C4.39167 6.04167 4 5.1 4 4C4 2.9 4.39167 1.95833 5.175 1.175C5.95833 0.391667 6.9 0 8 0C9.1 0 10.0417 0.391667 10.825 1.175C11.6083 1.95833 12 2.9 12 4C12 5.1 11.6083 6.04167 10.825 6.825C10.0417 7.60833 9.1 8 8 8ZM2 16C1.45 16 0.979333 15.8043 0.588 15.413C0.196 15.021 0 14.55 0 14V13.2C0 12.6333 0.146 12.1123 0.438 11.637C0.729334 11.1623 1.11667 10.8 1.6 10.55C2.63333 10.0333 3.68333 9.64567 4.75 9.387C5.81667 9.129 6.9 9 8 9C9.1 9 10.1833 9.129 11.25 9.387C12.3167 9.64567 13.3667 10.0333 14.4 10.55C14.8833 10.8 15.2707 11.1623 15.562 11.637C15.854 12.1123 16 12.6333 16 13.2V14C16 14.55 15.8043 15.021 15.413 15.413C15.021 15.8043 14.55 16 14 16H2Z"
+                                        fill="white"
+                                />
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g></svg></span
+                        >
+                        <p>
+                            <span th:text="${event.getCurrPlayers()}"></span>
+                            <span>/</span>
+                            <span th:text="${event.getPlayers()}"></span>
+                        </p>
+                    </div>
+                    <div th:if="${event.getCurrPlayers() < event.getPlayers()}" class="participate">
+                        <button class="participate-btn open-modal2">
+                            participate
+                            <span class="icon-plus"
+                            ><svg
+                                    width="26"
+                                    height="26"
+                                    viewBox="0 0 26 26"
+                                    xmlns="http://www.w3.org/2000/svg"
+                            >
+                      <path
+                              d="M14.25 6.75H11.75V11.75H6.75V14.25H11.75V19.25H14.25V14.25H19.25V11.75H14.25V6.75ZM13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM13 23C7.4875 23 3 18.5125 3 13C3 7.4875 7.4875 3 13 3C18.5125 3 23 7.4875 23 13C23 18.5125 18.5125 23 13 23Z"
+                              fill="white"
+                      />
+                    </svg>
+                  </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="show-more search-events">
+        Show more
+        <span>
+          <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+          >
+            <g clip-path="url(#clip0_70_605)">
+              <path
+                      d="M6.175 7.1582L10 10.9749L13.825 7.1582L15 8.3332L10 13.3332L5 8.3332L6.175 7.1582Z"
+                      fill="#0046FF"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_70_605">
+                <rect width="20" height="20" fill="white"/>
+              </clipPath>
+            </defs>
+          </svg>
+        </span>
+    </button>
+</div>
+
+<div class="footer">
+    <div class="footer-head">
+        <p>
+            <span class="play">Play. </span><span class="chat">Chat. </span
+        ><span class="fun">Fun. </span>
+        </p>
+    </div>
+    <div class="footer-descr">
+        <p>
+            Lorem ipsum dolor sit amet consectetur. In lorem mauris proin pretium
+            enim sit suspendisse. Tortor tincidunt nunc odio ultricies rhoncus
+            felis posuere ullamcorper. Ut sit integer quis velit nullam cursus
+            congue at. In eu diam et vitae pharetra velit amet.
+        </p>
+    </div>
+    <div class="footer-btns">
+        <button class="footer-btn">👀 Insights</button>
+        <button class="footer-btn">👋 Contact</button>
+    </div>
+    <div class="divider"></div>
+    <div class="footer-bottom">
+        <div>
+            <img src="/img/Logo.png" alt="Logo"/>
+        </div>
+        <div><p>© 2024 BG Media. All Rights Reserved.</p></div>
+        <div class="footer-social">
+            <svg
+                    width="163"
+                    height="39"
+                    viewBox="0 0 163 39"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+            >
+                <g id="Social">
+                    <g id="Twitter Icon">
+                        <rect
+                                id="Rectangle"
+                                opacity="0.15"
+                                x="120.175"
+                                y="0.75"
+                                width="42.0754"
+                                height="37.5"
+                                rx="18.75"
+                                stroke="#0A142F"
+                                stroke-width="1.5"
+                        />
+                        <path
+                                id="Twitter"
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M141.002 16.9262L141.034 17.402L140.509 17.3437C138.599 17.1204 136.93 16.363 135.513 15.091L134.821 14.4599L134.642 14.926C134.265 15.9649 134.506 17.0621 135.293 17.8001C135.713 18.2079 135.618 18.2661 134.894 18.0234C134.642 17.9457 134.422 17.8874 134.401 17.9166C134.328 17.9845 134.579 18.8681 134.779 19.2177C135.052 19.7032 135.608 20.179 136.217 20.4605L136.731 20.6839L136.122 20.6936C135.534 20.6936 135.513 20.7033 135.576 20.9072C135.786 21.5383 136.615 22.2083 137.539 22.4996L138.19 22.7035L137.623 23.0142C136.783 23.4609 135.797 23.7133 134.81 23.7328C134.338 23.7425 133.95 23.7813 133.95 23.8104C133.95 23.9075 135.23 24.4513 135.975 24.6649C138.211 25.296 140.866 25.0242 142.86 23.9464C144.277 23.1793 145.694 21.6549 146.355 20.179C146.712 19.3925 147.069 17.9554 147.069 17.266C147.069 16.8194 147.1 16.7611 147.688 16.2271C148.034 15.9164 148.36 15.5765 148.423 15.4794C148.528 15.2949 148.517 15.2949 147.982 15.46C147.09 15.7513 146.964 15.7124 147.405 15.2755C147.73 14.9648 148.118 14.4016 148.118 14.2366C148.118 14.2074 147.961 14.256 147.782 14.3434C147.593 14.4405 147.174 14.5861 146.859 14.6735L146.292 14.8386L145.778 14.5181C145.494 14.3434 145.096 14.1492 144.886 14.0909C144.35 13.955 143.532 13.9744 143.049 14.1297C141.737 14.5667 140.908 15.693 141.002 16.9262Z"
+                                fill="#0A142F"
+                        />
+                    </g>
+                    <g id="Linkedin Icon">
+                        <rect
+                                id="Rectangle_2"
+                                opacity="0.15"
+                                x="60.9568"
+                                y="0.75"
+                                width="42.0754"
+                                height="37.5"
+                                rx="18.75"
+                                stroke="#0A142F"
+                                stroke-width="1.5"
+                        />
+                        <g id="Group 14">
+                            <path
+                                    id="Shape"
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M78.0839 26H74.7319V17H78.0839V26Z"
+                                    fill="#0A142F"
+                            />
+                            <path
+                                    id="Shape_2"
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M76.3979 15H76.3789C75.3786 15 74.7319 14.333 74.7319 13.4995C74.7319 12.6483 75.3983 12 76.4176 12C77.4369 12 78.0646 12.6483 78.0839 13.4995C78.0839 14.333 77.4369 15 76.3979 15Z"
+                                    fill="#0A142F"
+                            />
+                            <path
+                                    id="Shape_3"
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M90.3741 25.9998H87.0803V21.2954C87.0803 20.1137 86.6037 19.3074 85.4113 19.3074C84.5012 19.3074 83.9592 19.851 83.7211 20.376C83.634 20.5641 83.6127 20.8263 83.6127 21.0891V26H80.3184C80.3184 26 80.3618 18.0318 80.3184 17.2067H83.6127V18.4522C84.0498 17.8535 84.8328 17 86.5817 17C88.7492 17 90.3742 18.2571 90.3742 20.958L90.3741 25.9998Z"
+                                    fill="#0A142F"
+                            />
+                        </g>
+                    </g>
+                    <g id="Facebook Icon">
+                        <rect
+                                id="Rectangle_3"
+                                opacity="0.15"
+                                x="1.73877"
+                                y="0.75"
+                                width="42.0754"
+                                height="37.5"
+                                rx="18.75"
+                                stroke="#0A142F"
+                                stroke-width="1.5"
+                        />
+                        <path
+                                id="Shape_4"
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M20.5986 27V19.4994H18.866V16.9146H20.5986V15.3626C20.5986 13.2539 21.577 12 24.3567 12H26.6708V14.5851H25.2243C24.1423 14.5851 24.0707 14.9464 24.0707 15.6205L24.0667 16.9143H26.6872L26.3806 19.4991H24.0667V27H20.5986Z"
+                                fill="#0A142F"
+                        />
+                    </g>
+                </g>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<script>
+    modal('.open-modal2', '.modal-wrapper2', '.model-content2', true, "#eventId");
+    showMore('.search-events', '.search-events-container', 3);
+</script>
+</body>
+</html>

@@ -22,6 +22,8 @@ public class GameConverterImpl implements GameConverter {
         entity.setId(api.getId());
         entity.setMaxPlayers(api.getMaxPlayers());
         entity.setRoundDuration(api.getRoundDuration());
+        entity.setGenre(api.getGenre());
+        entity.setCreationDate(api.getCreationDate());
         return entity;
     }
 
@@ -37,6 +39,8 @@ public class GameConverterImpl implements GameConverter {
         api.setRoundDuration(entity.getRoundDuration());
         api.setMaxPlayers(entity.getMaxPlayers());
         api.setId(entity.getId());
+        api.setGenre(entity.getGenre());
+        api.setCreationDate(entity.getCreationDate());
         return api;
     }
 

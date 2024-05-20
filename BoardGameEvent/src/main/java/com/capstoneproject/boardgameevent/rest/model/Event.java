@@ -11,15 +11,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Event {
 
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private String location;
     private LocalDateTime dateTime;
-    private int players;
-    private int currPlayers;
-    private float rating;
-    private int gameId;
+    private Integer players;
+    private Integer currPlayers;
+    private Float rating;
+    private Integer gameId;
 
     public boolean isRateable() {
         return dateTime.isBefore(LocalDateTime.now());

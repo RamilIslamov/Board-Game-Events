@@ -3,7 +3,7 @@ package com.capstoneproject.boardgameevent.rest.model;
 import lombok.Data;
 
 @Data
-public class ParticipateForm {
+public class ExitForm {
 
-    private String eventId;
+    private String exitEventId;
 }

@@ -5,7 +5,9 @@ create table if not exists games
     max_players        integer      not null,
     round_duration_min integer      not null,
     equipment          varchar(50),
-    rules              varchar(255) not null
+    rules              varchar(255) not null,
+    genre              varchar(50),
+    creation_date      timestamp
 );
 
 create table if not exists events
@@ -18,7 +20,8 @@ create table if not exists events
     players      integer      not null,
     curr_players integer,
     rating       numeric(3, 2),
-    game_id      integer      not null references games (id)
+    game_id      integer      not null references games (id),
+    users_voted  integer
 );
 
 create table if not exists teams
@@ -29,7 +32,8 @@ create table if not exists teams
     members_amount integer     not null,
     events_visited integer,
     games_played   integer,
-    games_won      integer
+    games_won      integer,
+    password       varchar(255)
 );
 
 create table if not exists places
@@ -46,7 +50,7 @@ create table if not exists users
 (
     user_id  serial primary key,
     email    varchar(255) not null,
-    password varchar(255),
+    password varchar(255) not null,
     username varchar(255)
 );
 
@@ -58,3 +62,14 @@ create table if not exists users_events
     foreign key (user_id) references users (user_id),
     foreign key (event_id) references events (event_id)
 );
+
+CREATE TABLE ratings
+(
+    id       serial primary key,
+    user_id  integer not null,
+    event_id integer not null,
+    rating   float   not null,
+    constraint fk_user foreign key (user_id) references users (user_id),
+    constraint fk_event foreign key (event_id) references events (event_id)
+);
+

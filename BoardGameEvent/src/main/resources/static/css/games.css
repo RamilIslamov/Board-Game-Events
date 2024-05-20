@@ -1,82 +1,92 @@
 .icon {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 .icon-plus {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 
 .name {
-  font-family: Rubik;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 20px; /* 100% */
-  margin-bottom: 14px;
+    font-family: Rubik;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 100% */
+    margin-bottom: 14px;
 }
 
 .description {
-  padding-left: 30px;
-  margin-bottom: 14px;
-  text-align: justify;
+    padding-left: 30px;
+    margin-bottom: 14px;
+    text-align: justify;
 }
 
 .location {
-  margin-bottom: 14px;
+    margin-bottom: 14px;
 }
 
 .time {
-  margin-bottom: 14px;
+    margin-bottom: 14px;
 }
 
 .offer-game {
-  border-radius: 12px;
-  background: #f4ce14;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  border: none;
-  outline: none;
-  padding: 10px 20px;
+    border-radius: 12px;
+    background: #f4ce14;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    border: none;
+    outline: none;
+    padding: 10px 20px;
 }
 
 .offer-game:focus {
-  border: none;
-  outline: none;
+    border: none;
+    outline: none;
 }
 
 .offer-game:hover {
-  box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
-  transition-duration: 300ms;
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
+    transition-duration: 300ms;
 }
 
 .card-content-games {
-  background-color: #f4ce14;
-  color: #000;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-  border-bottom-left-radius: 0px;
-  padding: 10px;
-  width: 60%;
+    background-color: #f4ce14;
+    color: #000;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 0px;
+    padding: 10px;
+    width: 60%;
 
-  font-family: Rubik;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 55px; /* 275% */
-  letter-spacing: 0.1px;
+    font-family: Rubik;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 55px; /* 275% */
+    letter-spacing: 0.1px;
 }
 
 .card-game {
-  flex-direction: row;
-  border-radius: 15px;
+    flex-direction: row;
+    border-radius: 15px;
+    width: 48%;
 }
 
 .card-img-games {
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-top-right-radius: 0px;
-  width: unset;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 0px;
+    width: 40%;
 }
 
 .game-prop {
-  margin: 0;
+    margin: 0;
 }
+
+.card.card-game:nth-child(2n) {
+    margin-right: 0;
+}
+
+.card-game:nth-child(n+3) {
+    display: none;
+}
+

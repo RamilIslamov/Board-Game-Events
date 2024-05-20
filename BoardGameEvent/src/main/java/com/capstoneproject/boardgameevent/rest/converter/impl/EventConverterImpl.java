@@ -3,6 +3,8 @@ package com.capstoneproject.boardgameevent.rest.converter.impl;
 import com.capstoneproject.boardgameevent.entity.Event;
 import com.capstoneproject.boardgameevent.rest.converter.EventConverter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -37,10 +39,16 @@ public class EventConverterImpl implements EventConverter {
         api.setLocation(entity.getLocation());
         api.setPlayers(entity.getPlayers());
         api.setDateTime(entity.getEventDate());
-        api.setId(entity.getEvent_id());
+        api.setId(entity.getEventId());
         api.setCurrPlayers(entity.getCurrPlayers());
         api.setGameId(entity.getGameId());
-        api.setRating(entity.getRating());
+        if (entity.getRating() != null) {
+            BigDecimal bd = new BigDecimal(entity.getRating().toString());
+            bd = bd.setScale(2, RoundingMode.HALF_UP);
+            api.setRating(bd.floatValue());
+        } else {
+            api.setRating(null);
+        }
         return api;
     }
 

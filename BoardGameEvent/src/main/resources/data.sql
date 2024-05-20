@@ -1,17 +1,23 @@
 TRUNCATE TABLE games CASCADE;
-INSERT INTO games (game_name, max_players, round_duration_min, equipment, rules)
+INSERT INTO games (game_name, max_players, round_duration_min, equipment, rules, genre)
 VALUES ('Chess', 2, 10, 'Chess board and pieces',
-        'Standard chess rules apply. Players take turns moving their pieces with the objective of capturing the opponent''s king while protecting their own'),
+        'Standard chess rules apply. Players take turns moving their pieces with the objective of capturing the opponent''s king while protecting their own',
+        'STRATEGY'),
        ('Catan', 4, 40, 'Game board',
-        'Before you do anything else on your turn, you must roll the two dice. The result applies to everyone and usually means you get to take a resource from the resource stacks depending on the number you’ve rolled and where your settlements are based.'),
+        'Before you do anything else on your turn, you must roll the two dice. The result applies to everyone and usually means you get to take a resource from the resource stacks depending on the number you’ve rolled and where your settlements are based.',
+        'ADVENTURE'),
        ('Terraforming Mars', 5, 70, 'Game board',
-        'Each round of the game represents one generation of development and colonization on Mars. At the start of each round, the first player token moves to the next player.'),
+        'Each round of the game represents one generation of development and colonization on Mars. At the start of each round, the first player token moves to the next player.',
+        'ACTION'),
        ('Pixies', 5, 10, 'Game board',
-        'On your turn, take a card from the display and place it in your area, whoever chose last chooses first next. To place a card there are a number of conditions.'),
+        'On your turn, take a card from the display and place it in your area, whoever chose last chooses first next. To place a card there are a number of conditions.',
+        'CARD'),
        ('Monopoly', 5, 120, 'Game board',
-        'At the start of the game, each player is given a fixed amount of play money; the players then move around the board according to the throw of a pair of dice. Any player who lands on an unowned property may buy it.'),
+        'At the start of the game, each player is given a fixed amount of play money; the players then move around the board according to the throw of a pair of dice. Any player who lands on an unowned property may buy it.',
+        'CLASSIC'),
        ('Wingspan', 5, 30, 'Game board',
-        'You are bird enthusiasts—researchers, bird watchers, ornithologists, and collectors—seeking to discover and attract the best birds to your network of wildlife preserves. Each bird extends a chain of powerful combinations in one of your habitats (actions).');
+        'You are bird enthusiasts—researchers, bird watchers, ornithologists, and collectors—seeking to discover and attract the best birds to your network of wildlife preserves. Each bird extends a chain of powerful combinations in one of your habitats (actions).',
+        'DETECTIVE');
 TRUNCATE TABLE events CASCADE;
 INSERT INTO events (event_name, description, location, event_date, players, curr_players, rating,
                     game_id)

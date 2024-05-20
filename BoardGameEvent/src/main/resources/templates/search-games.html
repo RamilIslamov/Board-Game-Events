@@ -47,114 +47,11 @@
     </ul>
     <div><img src="/img/Avatar.png" alt="Avatar"/></div>
 </div>
-<div class="container-search">
-    <form class="search-bar" id="search-form-games" action="/search-games" method="post">
-        <div class="search-input">
-            <button class="search-btn">
-                <img src="/img/Search.png" alt="search icon"/>
-            </button>
-            <input class="search-in" type="text" placeholder="Search" name="searchTitle"/>
-        </div>
-        <div class="select-wrap">
-            <label for="genres">Genre:</label>
-            <select name="genre" style="width: 100%" id="genres">
-                <option value="" selected>-</option>
-                <option th:each="genre : ${genres}"
-                        th:value="${genre.name()}"
-                        th:text="${genre.getDescription()}"
-                >
-                </option>
-            </select>
-        </div>
-        <div class="select-wrap">
-            <label for="durationTime">Duration:</label>
-            <select name="duration" style="width: 100%" id="durationTime">
-                <option value="" selected>-</option>
-                <option th:each="duration : ${durations}"
-                        th:value="${duration.name()}"
-                        th:text="${duration.getDescription()}"
-                >
-                </option>
-            </select>
-        </div>
-        <div class="select-wrap">
-            <label for="maxPlayers">Max players:</label>
-            <select name="maxPlayers" style="width: 100%" id="maxPlayers">
-                <option value="" selected>-</option>
-                <option th:each="player : ${people}"
-                        th:value="${player.name()}"
-                        th:text="${player.getDescription()}"
-                >
-                </option>
-            </select>
-        </div>
-    </form>
-    <button class="offer-game open-modal">Offer game</button>
-</div>
-
-<div class="modal-wrapper">
-    <div class="model-content">
-        <form class="form-container" id="createGame" action="/games" method="post">
-            <input
-                    type="text"
-                    name="gameName"
-                    id="gameName"
-                    placeholder="Game name"
-            />
-            <div class="gameNameError validation-error"></div>
-
-            <input
-                    placeholder="Event players amount"
-                    type="number"
-                    name="gamePeople"
-                    id="gamePeople"
-                    min="0"
-            />
-            <div class="gamePeopleError validation-error"></div>
-
-            <select name="gameGenre" id="gameGenre" style="width: 100%">
-                <option th:each="genre : ${genres}"
-                        th:value="${genre.name()}"
-                        th:text="${genre.getDescription()}"
-                >
-            </select>
-            <div class="gameGenreError validation-error"></div>
-
-            <input
-                    placeholder="One round duration in min"
-                    type="number"
-                    name="gameDuration"
-                    id="gameDuration"
-                    min="0"
-            />
-            <div class="gameDurationError validation-error"></div>
-
-            <input
-                    placeholder="Additional equipment"
-                    type="text"
-                    name="gameEquipment"
-                    id="gameEquipment"
-            />
-            <div class="gameEquipmentError validation-error"></div>
-
-            <textarea
-                    placeholder="Game rules"
-                    name="gameRules"
-                    id="gameRules"
-                    width="30"
-                    height="50"
-            ></textarea>
-            <div class="gameRulesError validation-error"></div>
-
-            <button type="submit" class="offer-game">Offer</button>
-        </form>
-    </div>
-</div>
 
 <div class="cards-section">
-    <h1 class="cards-header">Recently added games</h1>
+    <h1 class="cards-header">Search results</h1>
     <div class="container-cards game-cards-container">
-        <div class="card card-game" th:each="game : ${games}" th:id="${game.getId()}">
+        <div class="card card-game" th:each="game : ${searchResults}" th:id="${game.getId()}">
             <div class="card-img card-img-games">
                 <img
                         src="/img/Rectangle%204.png"
@@ -197,77 +94,6 @@
 
 
     <button class="show-more recent-games">
-        Show more
-        <span>
-          <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-          >
-            <g clip-path="url(#clip0_70_605)">
-              <path
-                      d="M6.175 7.1582L10 10.9749L13.825 7.1582L15 8.3332L10 13.3332L5 8.3332L6.175 7.1582Z"
-                      fill="#0046FF"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_70_605">
-                <rect width="20" height="20" fill="white"/>
-              </clipPath>
-            </defs>
-          </svg>
-        </span>
-    </button>
-</div>
-
-<div class="cards-section">
-    <h1 class="cards-header">All games</h1>
-    <div class="container-cards all-game-cards-container">
-        <div class="card card-game" th:each="game : ${allGames}" th:id="${game.getId()}">
-            <div class="card-img card-img-games">
-                <img
-                        src="/img/Rectangle%204.png"
-                        height="100%"
-                        width="100%"
-                        alt="Game image"
-                />
-            </div>
-            <div class="card-content card-content-games">
-                <div class="name">
-                    <h2 th:text="${game.getName()}"></h2>
-                </div>
-                <div class="game-prop">
-                    <p>
-                        Max players per game:&nbsp;
-                        <span th:text="${game.getMaxPlayers()}"></span>
-                    </p>
-                </div>
-                <div class="game-prop">
-                    <p>Genre:&nbsp;
-                        <span th:text="${game.getGenre().getDescription()}"></span>
-                    </p>
-                </div>
-                <div class="game-prop">
-                    <p>Duration:&nbsp;
-                        <span th:text="${game.getRoundDuration()}"></span>
-                        <span>&nbsp;min</span></p>
-                </div>
-                <div class="game-prop">
-                    <p>Additional equipment:&nbsp;
-                        <span th:text="${game.getEquipment()}"></span></p>
-                </div>
-                <div class="game-prop">
-                    <p>Rules:&nbsp;
-                        <span th:text="${game.getRules()}"></span></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <button class="show-more all-games">
         Show more
         <span>
           <svg
@@ -408,11 +234,8 @@
         </div>
     </div>
 </div>
-<script src="/js/create-game-validation.js"></script>
 <script>
-    modal('.open-modal', '.modal-wrapper', '.model-content', true);
     showMore('.recent-games', '.game-cards-container', 2);
-    showMore('.all-games', '.all-game-cards-container', 2);
 </script>
 </body>
 </html>
