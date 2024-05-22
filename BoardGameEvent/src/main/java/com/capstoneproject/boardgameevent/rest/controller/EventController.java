@@ -11,7 +11,6 @@ import com.capstoneproject.boardgameevent.rest.model.ParticipateForm;
 import com.capstoneproject.boardgameevent.rest.model.RateForm;
 import com.capstoneproject.boardgameevent.service.EventService;
 import com.capstoneproject.boardgameevent.service.GameService;
-import com.capstoneproject.boardgameevent.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -45,8 +44,6 @@ public class EventController {
     private final GameService gameService;
 
     private final GameConverter gameConverter;
-
-    private final UserService userService;
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Event> findById(@PathVariable Integer id) {

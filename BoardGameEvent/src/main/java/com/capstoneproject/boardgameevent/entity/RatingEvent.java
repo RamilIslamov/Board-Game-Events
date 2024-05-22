@@ -1,5 +1,6 @@
 package com.capstoneproject.boardgameevent.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,8 +14,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "ratings")
-public class Rating {
+@Table(name = "ratings_events")
+public class RatingEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +29,6 @@ public class Rating {
     @JoinColumn(name = "event_id")
     private Event event;
 
+    @Column(name = "rating_event")
     private Float rating;
 }

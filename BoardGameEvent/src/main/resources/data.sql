@@ -19,7 +19,8 @@ VALUES ('Chess', 2, 10, 'Chess board and pieces',
         'You are bird enthusiasts—researchers, bird watchers, ornithologists, and collectors—seeking to discover and attract the best birds to your network of wildlife preserves. Each bird extends a chain of powerful combinations in one of your habitats (actions).',
         'DETECTIVE');
 TRUNCATE TABLE events CASCADE;
-INSERT INTO events (event_name, description, location, event_date, players, curr_players, rating,
+INSERT INTO events (event_name, description, location, event_date, players, curr_players,
+                    ratingEvent,
                     game_id)
 VALUES ('Chess championship', 'Standard chess rules, 10min per game, 4 boards', 'Aloha bar',
         '2024-05-10 12:00:00', 20, 0, 4.57, 1),

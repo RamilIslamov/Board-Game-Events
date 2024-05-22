@@ -1,320 +1,328 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
     <!-- Required meta tags -->
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
     <!-- Bootstrap CSS -->
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/css/common.css" />
-    <link rel="stylesheet" href="/css/events.css" />
-    <link rel="stylesheet" href="/css/teams.css" />
-    <link rel="stylesheet" href="/css/modal.css" />
+    <link rel="stylesheet" href="/css/common.css"/>
+    <link rel="stylesheet" href="/css/events.css"/>
+    <link rel="stylesheet" href="/css/teams.css"/>
+    <link rel="stylesheet" href="/css/modal.css"/>
     <script src="/js/modal.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
-      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-      rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+            rel="stylesheet"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+            rel="stylesheet"
     />
+    <script src="/js/create-team-validation.js.js"></script>
+    <script src="/js/join-team.validation.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <title>Teams</title>
-  </head>
-  <body>
-    <div class="home-header">
-      <div>
-        <img src="/img/Logo.png" alt="Logo" />
-      </div>
-      <ul class="home-list">
+</head>
+<body>
+<div class="home-header">
+    <div>
+        <img src="/img/Logo.png" alt="Logo"/>
+    </div>
+    <ul class="home-list">
         <li><a class="ref" href="/events">Events</a></li>
         <li><a class="ref" href="/games">Games</a></li>
         <li><a class="ref" href="/teams">Teams</a></li>
         <li><a class="ref" href="/places">Places</a></li>
-      </ul>
-      <div><img src="/img/Avatar.png" alt="Avatar" /></div>
-    </div>
+    </ul>
+    <div><img src="/img/Avatar.png" alt="Avatar"/></div>
+    <form action="/logout" method="post">
+        <button type="submit" class="btn btn-link logout-btn">
+            Log out
+            <svg width="21" height="21" viewBox="0 0 21 21" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <g id="Logout">
+                    <path id="Vector" fill-rule="evenodd" clip-rule="evenodd"
+                          d="M3.59424 3.54395C3.85945 3.54395 4.11381 3.6493 4.30135 3.83684C4.48888 4.02437 4.59424 4.27873 4.59424 4.54395V16.5439C4.59424 16.8092 4.48888 17.0635 4.30135 17.2511C4.11381 17.4386 3.85945 17.5439 3.59424 17.5439C3.32902 17.5439 3.07467 17.4386 2.88713 17.2511C2.6996 17.0635 2.59424 16.8092 2.59424 16.5439V4.54395C2.59424 4.27873 2.6996 4.02437 2.88713 3.83684C3.07467 3.6493 3.32902 3.54395 3.59424 3.54395ZM11.3012 6.83695C11.4887 7.02447 11.594 7.27878 11.594 7.54395C11.594 7.80911 11.4887 8.06342 11.3012 8.25095L10.0082 9.54395H17.5942C17.8595 9.54395 18.1138 9.6493 18.3013 9.83684C18.4889 10.0244 18.5942 10.2787 18.5942 10.5439C18.5942 10.8092 18.4889 11.0635 18.3013 11.2511C18.1138 11.4386 17.8595 11.5439 17.5942 11.5439H10.0082L11.3012 12.8369C11.4834 13.0255 11.5842 13.2781 11.5819 13.5403C11.5796 13.8025 11.4745 14.0534 11.2891 14.2388C11.1036 14.4242 10.8528 14.5293 10.5906 14.5316C10.3284 14.5339 10.0758 14.4331 9.88724 14.2509L6.88724 11.2509C6.69977 11.0634 6.59445 10.8091 6.59445 10.5439C6.59445 10.2788 6.69977 10.0245 6.88724 9.83695L9.88724 6.83695C10.0748 6.64947 10.3291 6.54416 10.5942 6.54416C10.8594 6.54416 11.1137 6.64947 11.3012 6.83695Z"
+                          fill="black"/>
+                </g>
+            </svg>
+        </button>
+    </form>
 
-    <div class="team-join-section">
-      <div class="create-link">
+</div>
+
+<div class="team-join-section">
+    <div class="create-link">
         <a class="team-join open-modal">
-          <svg
-            class="icon"
-            width="26"
-            height="26"
-            viewBox="0 0 26 26"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14.25 6.75H11.75V11.75H6.75V14.25H11.75V19.25H14.25V14.25H19.25V11.75H14.25V6.75ZM13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM13 23C7.4875 23 3 18.5125 3 13C3 7.4875 7.4875 3 13 3C18.5125 3 23 7.4875 23 13C23 18.5125 18.5125 23 13 23Z"
-              fill="#42BA58"
-            />
-          </svg>
-          Create team</a
+            <svg
+                    class="icon"
+                    width="26"
+                    height="26"
+                    viewBox="0 0 26 26"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                        d="M14.25 6.75H11.75V11.75H6.75V14.25H11.75V19.25H14.25V14.25H19.25V11.75H14.25V6.75ZM13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM13 23C7.4875 23 3 18.5125 3 13C3 7.4875 7.4875 3 13 3C18.5125 3 23 7.4875 23 13C23 18.5125 18.5125 23 13 23Z"
+                        fill="#42BA58"
+                />
+            </svg>
+            Create team</a
         >
-      </div>
-      <div class="join-link">
+    </div>
+    <div class="join-link">
         <a class="team-join open-modal2">
-          <svg
-            class="icon"
-            width="26"
-            height="26"
-            viewBox="0 0 40 40"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g clip-path="url(#clip0_79_684)">
-              <path
-                d="M18.3333 11.6667L16 14L20.3333 18.3333H3.33334V21.6667H20.3333L16 26L18.3333 28.3333L26.6667 20L18.3333 11.6667ZM33.3333 31.6667H20V35H33.3333C35.1667 35 36.6667 33.5 36.6667 31.6667V8.33333C36.6667 6.5 35.1667 5 33.3333 5H20V8.33333H33.3333V31.6667Z"
-                fill="#0046FF"
-              />
-            </g>
-            <defs>
-              <clipPath id="clip0_79_684">
-                <rect width="40" height="40" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-          Join team</a
+            <svg
+                    class="icon"
+                    width="26"
+                    height="26"
+                    viewBox="0 0 40 40"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+            >
+                <g clip-path="url(#clip0_79_684)">
+                    <path
+                            d="M18.3333 11.6667L16 14L20.3333 18.3333H3.33334V21.6667H20.3333L16 26L18.3333 28.3333L26.6667 20L18.3333 11.6667ZM33.3333 31.6667H20V35H33.3333C35.1667 35 36.6667 33.5 36.6667 31.6667V8.33333C36.6667 6.5 35.1667 5 33.3333 5H20V8.33333H33.3333V31.6667Z"
+                            fill="#0046FF"
+                    />
+                </g>
+                <defs>
+                    <clipPath id="clip0_79_684">
+                        <rect width="40" height="40" fill="white"/>
+                    </clipPath>
+                </defs>
+            </svg>
+            Join team</a
         >
-      </div>
     </div>
+</div>
 
-    <div class="modal-wrapper">
-      <div class="model-content">
-        <form class="form-container" action="/events" method="post">
-          <input
-            type="text"
-            name="teamName"
-            id="teamName"
-            placeholder="Team name"
-          />
+<div class="modal-wrapper">
+    <div class="model-content">
+        <form id="teamForm" class="form-container" action="/teams/create" method="post">
+            <input
+                    type="text"
+                    name="teamName"
+                    id="teamName"
+                    placeholder="Team name"
+            />
+            <div class="teamNameError validation-error"></div>
 
-          <input
-            placeholder="Leader name"
-            type="text"
-            name="teamLeader"
-            id="teamLeader"
-          />
+            <input
+                    placeholder="Leader name"
+                    type="text"
+                    name="teamLeader"
+                    id="teamLeader"
+            />
+            <div class="teamLeaderError validation-error"></div>
 
-          <input
-            placeholder="Members amount"
-            type="number"
-            name="teamMembers"
-            id="teamMembers"
-            min="0"
-          />
+            <input
+                    placeholder="Members amount"
+                    type="number"
+                    name="teamMembers"
+                    id="teamMembers"
+                    min="0"
+            />
+            <div class="teamMembersError validation-error"></div>
 
-          <input
-            placeholder="Team password"
-            type="password"
-            name="teamPassword"
-            id="teamPassword"
-          />
+            <input
+                    placeholder="Team password"
+                    type="password"
+                    name="teamPassword"
+                    id="teamPassword"
+            />
+            <div class="teamPasswordError validation-error"></div>
 
-          <button type="submit" class="create-event">Create</button>
+            <button id="submitButton" type="submit" class="create-event">Create</button>
+            <div id="errorMessage" style="color: red; display: none;"></div>
         </form>
-      </div>
     </div>
+</div>
 
-    <div class="modal-wrapper2">
-      <div class="model-content2">
-        <form class="form-container" action="/events" method="post">
-          <input
-            type="text"
-            name="teamNameJoin"
-            id="teamNameJoin"
-            placeholder="Team name"
-          />
+<div class="modal-wrapper2">
+    <div class="model-content2">
+        <form id="joinForm" class="form-container" action="/teams/join" method="post">
+            <input
+                    type="text"
+                    name="teamNameJoin"
+                    id="teamNameJoin"
+                    placeholder="Team name"
+            />
+            <div class="teamNameJoinError validation-error"></div>
 
-          <input
-            placeholder="Team password"
-            type="password"
-            name="teamPasswordJoin"
-            id="teamPasswordJoin"
-          />
+            <input
+                    placeholder="Team password"
+                    type="password"
+                    name="teamPasswordJoin"
+                    id="teamPasswordJoin"
+            />
+            <div class="teamPasswordJoinError validation-error"></div>
 
-          <button type="submit" class="create-event">Join</button>
+            <div id="errorMessageJoin" style="color: red; display: none;"></div>
+            <button id="joinBtn" type="submit" class="create-event">Join</button>
         </form>
-      </div>
     </div>
+</div>
 
-    <table>
-      <tr>
+<table>
+    <tr>
         <th>Name</th>
         <th>Leader</th>
         <th>Members amount</th>
         <th>Events visited</th>
         <th>Games played</th>
         <th>Games won</th>
-      </tr>
-      <tr>
-        <td>Rabbits</td>
-        <td>White rabbit</td>
-        <td>11</td>
-        <td>404</td>
-        <td>69</td>
-        <td>42</td>
-      </tr>
-      <tr>
-        <td>Rabbits</td>
-        <td>White rabbit</td>
-        <td>11</td>
-        <td>404</td>
-        <td>69</td>
-        <td>42</td>
-      </tr>
-      <tr>
-        <td>Rabbits</td>
-        <td>White rabbit</td>
-        <td>11</td>
-        <td>404</td>
-        <td>69</td>
-        <td>42</td>
-      </tr>
-      <tr>
-        <td>Rabbits</td>
-        <td>White rabbit</td>
-        <td>11</td>
-        <td>404</td>
-        <td>69</td>
-        <td>42</td>
-      </tr>
-    </table>
+    </tr>
+    <tr th:each="team : ${teams}">
+        <td th:text="${team.getName()}">Rabbits</td>
+        <td th:text="${team.getLeader()}">White rabbit</td>
+        <td th:text="${team.getMembersAmount()}">11</td>
+        <td th:text="${team.getVisited()}">404</td>
+        <td th:text="${team.getPlayed()}">69</td>
+        <td th:text="${team.getWins()}">42</td>
+    </tr>
+</table>
 
-    <div class="footer">
-      <div class="footer-head">
+<div class="footer">
+    <div class="footer-head">
         <p>
-          <span class="play">Play. </span><span class="chat">Chat. </span
-          ><span class="fun">Fun. </span>
+            <span class="play">Play. </span><span class="chat">Chat. </span
+        ><span class="fun">Fun. </span>
         </p>
-      </div>
-      <div class="footer-descr">
+    </div>
+    <div class="footer-descr">
         <p>
-          Lorem ipsum dolor sit amet consectetur. In lorem mauris proin pretium
-          enim sit suspendisse. Tortor tincidunt nunc odio ultricies rhoncus
-          felis posuere ullamcorper. Ut sit integer quis velit nullam cursus
-          congue at. In eu diam et vitae pharetra velit amet.
+            Lorem ipsum dolor sit amet consectetur. In lorem mauris proin pretium
+            enim sit suspendisse. Tortor tincidunt nunc odio ultricies rhoncus
+            felis posuere ullamcorper. Ut sit integer quis velit nullam cursus
+            congue at. In eu diam et vitae pharetra velit amet.
         </p>
-      </div>
-      <div class="footer-btns">
-        <button class="footer-btn">👀 Insights</button>
-        <button class="footer-btn">👋 Contact</button>
-      </div>
-      <div class="divider"></div>
-      <div class="footer-bottom">
+    </div>
+    <div class="footer-btns">
+        <button class="footer-btn"
+                onclick="window.location.href='mailto:insights.BG@gmail.com?subject=Insights%20Request'">
+            👀 Insights
+        </button>
+        <button class="footer-btn"
+                onclick="window.location.href='mailto:sales.BG@gmail.com?subject=Contact%20Request'">
+            👋 Contact
+        </button>
+    </div>
+    <div class="divider"></div>
+    <div class="footer-bottom">
         <div>
-          <img src="/img/Logo.png" alt="Logo" />
+            <img src="/img/Logo.png" alt="Logo"/>
         </div>
         <div><p>© 2024 BG Media. All Rights Reserved.</p></div>
         <div class="footer-social">
-          <svg
-            width="163"
-            height="39"
-            viewBox="0 0 163 39"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g id="Social">
-              <g id="Twitter Icon">
-                <rect
-                  id="Rectangle"
-                  opacity="0.15"
-                  x="120.175"
-                  y="0.75"
-                  width="42.0754"
-                  height="37.5"
-                  rx="18.75"
-                  stroke="#0A142F"
-                  stroke-width="1.5"
-                />
-                <path
-                  id="Twitter"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M141.002 16.9262L141.034 17.402L140.509 17.3437C138.599 17.1204 136.93 16.363 135.513 15.091L134.821 14.4599L134.642 14.926C134.265 15.9649 134.506 17.0621 135.293 17.8001C135.713 18.2079 135.618 18.2661 134.894 18.0234C134.642 17.9457 134.422 17.8874 134.401 17.9166C134.328 17.9845 134.579 18.8681 134.779 19.2177C135.052 19.7032 135.608 20.179 136.217 20.4605L136.731 20.6839L136.122 20.6936C135.534 20.6936 135.513 20.7033 135.576 20.9072C135.786 21.5383 136.615 22.2083 137.539 22.4996L138.19 22.7035L137.623 23.0142C136.783 23.4609 135.797 23.7133 134.81 23.7328C134.338 23.7425 133.95 23.7813 133.95 23.8104C133.95 23.9075 135.23 24.4513 135.975 24.6649C138.211 25.296 140.866 25.0242 142.86 23.9464C144.277 23.1793 145.694 21.6549 146.355 20.179C146.712 19.3925 147.069 17.9554 147.069 17.266C147.069 16.8194 147.1 16.7611 147.688 16.2271C148.034 15.9164 148.36 15.5765 148.423 15.4794C148.528 15.2949 148.517 15.2949 147.982 15.46C147.09 15.7513 146.964 15.7124 147.405 15.2755C147.73 14.9648 148.118 14.4016 148.118 14.2366C148.118 14.2074 147.961 14.256 147.782 14.3434C147.593 14.4405 147.174 14.5861 146.859 14.6735L146.292 14.8386L145.778 14.5181C145.494 14.3434 145.096 14.1492 144.886 14.0909C144.35 13.955 143.532 13.9744 143.049 14.1297C141.737 14.5667 140.908 15.693 141.002 16.9262Z"
-                  fill="#0A142F"
-                />
-              </g>
-              <g id="Linkedin Icon">
-                <rect
-                  id="Rectangle_2"
-                  opacity="0.15"
-                  x="60.9568"
-                  y="0.75"
-                  width="42.0754"
-                  height="37.5"
-                  rx="18.75"
-                  stroke="#0A142F"
-                  stroke-width="1.5"
-                />
-                <g id="Group 14">
-                  <path
-                    id="Shape"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M78.0839 26H74.7319V17H78.0839V26Z"
-                    fill="#0A142F"
-                  />
-                  <path
-                    id="Shape_2"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M76.3979 15H76.3789C75.3786 15 74.7319 14.333 74.7319 13.4995C74.7319 12.6483 75.3983 12 76.4176 12C77.4369 12 78.0646 12.6483 78.0839 13.4995C78.0839 14.333 77.4369 15 76.3979 15Z"
-                    fill="#0A142F"
-                  />
-                  <path
-                    id="Shape_3"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M90.3741 25.9998H87.0803V21.2954C87.0803 20.1137 86.6037 19.3074 85.4113 19.3074C84.5012 19.3074 83.9592 19.851 83.7211 20.376C83.634 20.5641 83.6127 20.8263 83.6127 21.0891V26H80.3184C80.3184 26 80.3618 18.0318 80.3184 17.2067H83.6127V18.4522C84.0498 17.8535 84.8328 17 86.5817 17C88.7492 17 90.3742 18.2571 90.3742 20.958L90.3741 25.9998Z"
-                    fill="#0A142F"
-                  />
+            <svg
+                    width="163"
+                    height="39"
+                    viewBox="0 0 163 39"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+            >
+                <g id="Social">
+                    <g id="Twitter Icon">
+                        <rect
+                                id="Rectangle"
+                                opacity="0.15"
+                                x="120.175"
+                                y="0.75"
+                                width="42.0754"
+                                height="37.5"
+                                rx="18.75"
+                                stroke="#0A142F"
+                                stroke-width="1.5"
+                        />
+                        <path
+                                id="Twitter"
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M141.002 16.9262L141.034 17.402L140.509 17.3437C138.599 17.1204 136.93 16.363 135.513 15.091L134.821 14.4599L134.642 14.926C134.265 15.9649 134.506 17.0621 135.293 17.8001C135.713 18.2079 135.618 18.2661 134.894 18.0234C134.642 17.9457 134.422 17.8874 134.401 17.9166C134.328 17.9845 134.579 18.8681 134.779 19.2177C135.052 19.7032 135.608 20.179 136.217 20.4605L136.731 20.6839L136.122 20.6936C135.534 20.6936 135.513 20.7033 135.576 20.9072C135.786 21.5383 136.615 22.2083 137.539 22.4996L138.19 22.7035L137.623 23.0142C136.783 23.4609 135.797 23.7133 134.81 23.7328C134.338 23.7425 133.95 23.7813 133.95 23.8104C133.95 23.9075 135.23 24.4513 135.975 24.6649C138.211 25.296 140.866 25.0242 142.86 23.9464C144.277 23.1793 145.694 21.6549 146.355 20.179C146.712 19.3925 147.069 17.9554 147.069 17.266C147.069 16.8194 147.1 16.7611 147.688 16.2271C148.034 15.9164 148.36 15.5765 148.423 15.4794C148.528 15.2949 148.517 15.2949 147.982 15.46C147.09 15.7513 146.964 15.7124 147.405 15.2755C147.73 14.9648 148.118 14.4016 148.118 14.2366C148.118 14.2074 147.961 14.256 147.782 14.3434C147.593 14.4405 147.174 14.5861 146.859 14.6735L146.292 14.8386L145.778 14.5181C145.494 14.3434 145.096 14.1492 144.886 14.0909C144.35 13.955 143.532 13.9744 143.049 14.1297C141.737 14.5667 140.908 15.693 141.002 16.9262Z"
+                                fill="#0A142F"
+                        />
+                    </g>
+                    <g id="Linkedin Icon">
+                        <rect
+                                id="Rectangle_2"
+                                opacity="0.15"
+                                x="60.9568"
+                                y="0.75"
+                                width="42.0754"
+                                height="37.5"
+                                rx="18.75"
+                                stroke="#0A142F"
+                                stroke-width="1.5"
+                        />
+                        <g id="Group 14">
+                            <path
+                                    id="Shape"
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M78.0839 26H74.7319V17H78.0839V26Z"
+                                    fill="#0A142F"
+                            />
+                            <path
+                                    id="Shape_2"
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M76.3979 15H76.3789C75.3786 15 74.7319 14.333 74.7319 13.4995C74.7319 12.6483 75.3983 12 76.4176 12C77.4369 12 78.0646 12.6483 78.0839 13.4995C78.0839 14.333 77.4369 15 76.3979 15Z"
+                                    fill="#0A142F"
+                            />
+                            <path
+                                    id="Shape_3"
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M90.3741 25.9998H87.0803V21.2954C87.0803 20.1137 86.6037 19.3074 85.4113 19.3074C84.5012 19.3074 83.9592 19.851 83.7211 20.376C83.634 20.5641 83.6127 20.8263 83.6127 21.0891V26H80.3184C80.3184 26 80.3618 18.0318 80.3184 17.2067H83.6127V18.4522C84.0498 17.8535 84.8328 17 86.5817 17C88.7492 17 90.3742 18.2571 90.3742 20.958L90.3741 25.9998Z"
+                                    fill="#0A142F"
+                            />
+                        </g>
+                    </g>
+                    <g id="Facebook Icon">
+                        <rect
+                                id="Rectangle_3"
+                                opacity="0.15"
+                                x="1.73877"
+                                y="0.75"
+                                width="42.0754"
+                                height="37.5"
+                                rx="18.75"
+                                stroke="#0A142F"
+                                stroke-width="1.5"
+                        />
+                        <path
+                                id="Shape_4"
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M20.5986 27V19.4994H18.866V16.9146H20.5986V15.3626C20.5986 13.2539 21.577 12 24.3567 12H26.6708V14.5851H25.2243C24.1423 14.5851 24.0707 14.9464 24.0707 15.6205L24.0667 16.9143H26.6872L26.3806 19.4991H24.0667V27H20.5986Z"
+                                fill="#0A142F"
+                        />
+                    </g>
                 </g>
-              </g>
-              <g id="Facebook Icon">
-                <rect
-                  id="Rectangle_3"
-                  opacity="0.15"
-                  x="1.73877"
-                  y="0.75"
-                  width="42.0754"
-                  height="37.5"
-                  rx="18.75"
-                  stroke="#0A142F"
-                  stroke-width="1.5"
-                />
-                <path
-                  id="Shape_4"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M20.5986 27V19.4994H18.866V16.9146H20.5986V15.3626C20.5986 13.2539 21.577 12 24.3567 12H26.6708V14.5851H25.2243C24.1423 14.5851 24.0707 14.9464 24.0707 15.6205L24.0667 16.9143H26.6872L26.3806 19.4991H24.0667V27H20.5986Z"
-                  fill="#0A142F"
-                />
-              </g>
-            </g>
-          </svg>
+            </svg>
         </div>
-      </div>
     </div>
-    <script>
-      modal('.open-modal', '.modal-wrapper', '.model-content', true);
-      modal('.open-modal2', '.modal-wrapper2', '.model-content2', true);
-    </script>
-  </body>
+</div>
+<script>
+    modal('.open-modal', '.modal-wrapper', '.model-content', true);
+    modal('.open-modal2', '.modal-wrapper2', '.model-content2', true);
+</script>
+
+</body>
 </html>

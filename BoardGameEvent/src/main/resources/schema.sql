@@ -19,7 +19,7 @@ create table if not exists events
     event_date   timestamp    not null,
     players      integer      not null,
     curr_players integer,
-    rating       numeric(3, 2),
+    ratingEvent  numeric(3, 2),
     game_id      integer      not null references games (id),
     users_voted  integer
 );
@@ -40,9 +40,9 @@ create table if not exists places
 (
     id          serial primary key,
     place_name  varchar(30)  not null,
-    rating      decimal(2, 1),
+    ratingEvent numeric(3, 2),
     hosted      integer,
-    event_id    integer      not null references events (event_id),
+    location    varchar(255),
     description varchar(255) not null
 );
 
@@ -63,13 +63,23 @@ create table if not exists users_events
     foreign key (event_id) references events (event_id)
 );
 
-CREATE TABLE ratings
+create table if not exists ratings_events
 (
-    id       serial primary key,
-    user_id  integer not null,
-    event_id integer not null,
-    rating   float   not null,
+    id           serial primary key,
+    user_id      integer not null,
+    event_id     integer not null,
+    rating_event float   not null,
     constraint fk_user foreign key (user_id) references users (user_id),
     constraint fk_event foreign key (event_id) references events (event_id)
+);
+
+create table if not exists ratings_places
+(
+    id           serial primary key,
+    user_id      integer not null,
+    place_id     integer not null,
+    rating_place float   not null,
+    constraint fk_user foreign key (user_id) references users (user_id),
+    constraint fk_event foreign key (place_id) references places (id)
 );
 

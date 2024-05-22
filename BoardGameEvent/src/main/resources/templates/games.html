@@ -46,6 +46,19 @@
         <li><a class="ref" href="/places">Places</a></li>
     </ul>
     <div><img src="/img/Avatar.png" alt="Avatar"/></div>
+    <form action="/logout" method="post">
+        <button type="submit" class="btn btn-link logout-btn">
+            Log out
+            <svg width="21" height="21" viewBox="0 0 21 21" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <g id="Logout">
+                    <path id="Vector" fill-rule="evenodd" clip-rule="evenodd"
+                          d="M3.59424 3.54395C3.85945 3.54395 4.11381 3.6493 4.30135 3.83684C4.48888 4.02437 4.59424 4.27873 4.59424 4.54395V16.5439C4.59424 16.8092 4.48888 17.0635 4.30135 17.2511C4.11381 17.4386 3.85945 17.5439 3.59424 17.5439C3.32902 17.5439 3.07467 17.4386 2.88713 17.2511C2.6996 17.0635 2.59424 16.8092 2.59424 16.5439V4.54395C2.59424 4.27873 2.6996 4.02437 2.88713 3.83684C3.07467 3.6493 3.32902 3.54395 3.59424 3.54395ZM11.3012 6.83695C11.4887 7.02447 11.594 7.27878 11.594 7.54395C11.594 7.80911 11.4887 8.06342 11.3012 8.25095L10.0082 9.54395H17.5942C17.8595 9.54395 18.1138 9.6493 18.3013 9.83684C18.4889 10.0244 18.5942 10.2787 18.5942 10.5439C18.5942 10.8092 18.4889 11.0635 18.3013 11.2511C18.1138 11.4386 17.8595 11.5439 17.5942 11.5439H10.0082L11.3012 12.8369C11.4834 13.0255 11.5842 13.2781 11.5819 13.5403C11.5796 13.8025 11.4745 14.0534 11.2891 14.2388C11.1036 14.4242 10.8528 14.5293 10.5906 14.5316C10.3284 14.5339 10.0758 14.4331 9.88724 14.2509L6.88724 11.2509C6.69977 11.0634 6.59445 10.8091 6.59445 10.5439C6.59445 10.2788 6.69977 10.0245 6.88724 9.83695L9.88724 6.83695C10.0748 6.64947 10.3291 6.54416 10.5942 6.54416C10.8594 6.54416 11.1137 6.64947 11.3012 6.83695Z"
+                          fill="black"/>
+                </g>
+            </svg>
+        </button>
+    </form>
 </div>
 <div class="container-search">
     <form class="search-bar" id="search-form-games" action="/search-games" method="post">
@@ -309,8 +322,14 @@
         </p>
     </div>
     <div class="footer-btns">
-        <button class="footer-btn">👀 Insights</button>
-        <button class="footer-btn">👋 Contact</button>
+        <button class="footer-btn"
+                onclick="window.location.href='mailto:insights.BG@gmail.com?subject=Insights%20Request'">
+            👀 Insights
+        </button>
+        <button class="footer-btn"
+                onclick="window.location.href='mailto:sales.BG@gmail.com?subject=Contact%20Request'">
+            👋 Contact
+        </button>
     </div>
     <div class="divider"></div>
     <div class="footer-bottom">

@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private final String username;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Rating> ratedEvents;
+    private Set<RatingEvent> ratedEvents;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

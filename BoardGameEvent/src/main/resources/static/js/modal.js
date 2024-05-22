@@ -3,7 +3,8 @@ function modal(
     modalWrapperSelector,
     modalContentSelector,
     closeModal = false,
-    idSelector = null
+    idSelector = null,
+    cardSelector = ".card"
 ) {
     // select elements
     const openModalBtns = document.querySelectorAll(openModalSelector);
@@ -21,7 +22,7 @@ function modal(
     // open modal onclick
     openModalBtns.forEach(btn => btn.addEventListener('click', () => {
         modalWrapperElement.style.display = 'block';
-        const eventId = btn.closest(".card").id;
+        const eventId = btn.closest(cardSelector).id;
         modalContentElement.querySelector(idSelector).value = eventId;
         const noBtn = modalContentElement.querySelector('.no-btn');
         noBtn.addEventListener('click', () => modalWrapperElement.style.display = 'none')

@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class RateForm {
 
-    private String rateEventId;
+    private String rateId;
     private String eventRate;
 }

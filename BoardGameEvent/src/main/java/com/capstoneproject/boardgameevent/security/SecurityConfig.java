@@ -35,7 +35,8 @@ public class SecurityConfig {
                     .permitAll().defaultSuccessUrl("/events", true)
             )
             .logout(logout -> logout
-                    .logoutSuccessUrl("/login?logout")
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login")
                     .permitAll()
             );
 
@@ -43,7 +44,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepo) {
+    public UserDetailsService customUserDetailsService(UserRepository userRepo) {
         return username -> {
             Optional<User> user = userRepo.findByUsername(username);
             return user.orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));

@@ -11,47 +11,37 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "events")
-public class Event {
+@Table(name = "places")
+public class Place {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer eventId;
+    private Integer id;
 
-    @Column(name = "event_name")
+    @Column(name = "place_name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "rating")
+    private Float raing = 0F;
+
+    @Column(name = "hosted")
+    private Integer hosted = 0;
 
     @Column(name = "location")
     private String location;
 
-    @Column(name = "event_date")
-    private LocalDateTime eventDate;
-
-    @Column(name = "players")
-    private Integer players;
-
-    @Column(name = "curr_players")
-    private Integer currPlayers = 0;
-
-    @Column(name = "rating")
-    private Float rating = 0F;
-
-    @Column(name = "game_id")
-    private Integer gameId;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "users_voted")
     private Integer usersVoted = 0;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private Set<RatingEvent> userRatingEvents;
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
+    private Set<RatingPlace> userRatingPlace;
 
 }

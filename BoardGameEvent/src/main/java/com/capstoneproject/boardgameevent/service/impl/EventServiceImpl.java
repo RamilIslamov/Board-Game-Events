@@ -2,12 +2,12 @@ package com.capstoneproject.boardgameevent.service.impl;
 
 import com.capstoneproject.boardgameevent.entity.Event;
 import com.capstoneproject.boardgameevent.entity.EventToUsers;
-import com.capstoneproject.boardgameevent.entity.Rating;
+import com.capstoneproject.boardgameevent.entity.RatingEvent;
 import com.capstoneproject.boardgameevent.entity.User;
 import com.capstoneproject.boardgameevent.exception.ActionAlreadyPerformedException;
 import com.capstoneproject.boardgameevent.repository.EventRepository;
 import com.capstoneproject.boardgameevent.repository.EventsToUsersRepository;
-import com.capstoneproject.boardgameevent.repository.RatingRepository;
+import com.capstoneproject.boardgameevent.repository.RatingEventRepository;
 import com.capstoneproject.boardgameevent.rest.model.ExitForm;
 import com.capstoneproject.boardgameevent.rest.model.ParticipateForm;
 import com.capstoneproject.boardgameevent.rest.model.RateForm;
@@ -39,7 +39,7 @@ public class EventServiceImpl extends AbstractSrdServiceImpl<Integer, Event> imp
 
     private final EventsToUsersRepository eventsToUsersRepository;
 
-    private final RatingRepository ratingRepository;
+    private final RatingEventRepository ratingEventRepository;
 
     @Override
     protected CrudRepository<Event, Integer> getRepository() {
@@ -119,10 +119,10 @@ public class EventServiceImpl extends AbstractSrdServiceImpl<Integer, Event> imp
     @Override
     @Transactional
     public void rate(RateForm form) throws ActionAlreadyPerformedException {
-        Integer eventId = Integer.parseInt(form.getRateEventId());
+        Integer eventId = Integer.parseInt(form.getRateId());
         Float rating = Float.parseFloat(form.getEventRate());
         Event event = getById(eventId);
-        if (!ratingRepository.existsByUserIdAndEventId(userService.getUser().getUserId(), eventId)) {
+        if (!ratingEventRepository.existsByUserIdAndEventId(userService.getUser().getUserId(), eventId)) {
             rate(eventId, rating);
         } else {
             throw new ActionAlreadyPerformedException(String.format("You are already rate %s in %s.", event.getName(), event.getLocation()));
@@ -182,11 +182,11 @@ public class EventServiceImpl extends AbstractSrdServiceImpl<Integer, Event> imp
             event.setUsersVoted(usersVoted + 1);
         }
 
-        Rating rating = new Rating();
-        rating.setUser(userService.getUser());
-        rating.setEvent(event);
-        rating.setRating(score);
-        ratingRepository.save(rating);
+        RatingEvent ratingEvent = new RatingEvent();
+        ratingEvent.setUser(userService.getUser());
+        ratingEvent.setEvent(event);
+        ratingEvent.setRating(score);
+        ratingEventRepository.save(ratingEvent);
     }
 }
 
