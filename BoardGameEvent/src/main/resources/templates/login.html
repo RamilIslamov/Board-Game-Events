@@ -39,7 +39,7 @@
       <a class="login-box-small-text-login" href="/register"
         >Create an account.</a
       >
-      <div th:if="${param.error}">
+      <div class="validation-error" th:if="${param.error}">
         Invalid username and password.
       </div>
       <div th:if="${param.logout}">
@@ -68,9 +68,6 @@
           <button type="submit" class="btn btn-primary create-btn">
             Log in
           </button>
-          <p class="sign-with-google">
-            Or, continue with <span class="links-for-net">Google</span>
-          </p>
         </form>
       </div>
     </div>
